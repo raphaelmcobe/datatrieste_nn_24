@@ -111,11 +111,11 @@ sheer complexity of connections between neurons;
 
 <br />
 
-Area (sq ft) (x)|	Price (y)
+Area (sq ft) (x)|	Price (y) in USD
 ----------------|----------
-2,104	          |  $\$399,900$
-1,600	          |  $\$329,900$
-2,400	          |  $\$369,000$
+2,104	          |  $399,900$
+1,600	          |  $329,900$
+2,400	          |  $369,000$
 
 ---
 ## Artificial Neural Networks
@@ -125,7 +125,7 @@ Area (sq ft) (x)|	Price (y)
 <br /><br />
 {{% fragment %}} How about finding the <em>average price per square feet</em>?{{% /fragment %}}
 <br /><br />
-{{% fragment %}} <em>$\$180$ per sq ft.</em> {{% /fragment %}}
+{{% fragment %}} <em>$180 per sq ft.</em> {{% /fragment %}}
 
 
 ---
@@ -137,18 +137,18 @@ Area (sq ft) (x)|	Price (y)
 ---
 ## Artificial Neural Networks
 ###### Motivation Example (taken from Jay Alammar <a href="https://jalammar.github.io/visual-interactive-guide-basics-neural-networks/" target="_blank">blog post</a>) 
-* Multiplying $2,000$ sq ft by $180$ gives us $\$360,000$. 
+* Multiplying $2,000$ sq ft by $180$ gives us  $360,000$. 
 * Calculating the prediction is simple multiplication. 
 * <strong><em>We needed to think about the weight we’ll be multiplying by.</em></strong>
 * That is what training means!
 
 <br />
 
-Area (sq ft) (x)|	Price (y)    | Estimated Price($\hat{y}$)
-----------------|--------------|---------------------------
-2,104	          |  $\$399,900$ |          $\$378,720$
-1,600	          |  $\$329,900$ |          $\$288,000$
-2,400	          |  $\$369,000$ |          $\$432,000$
+Area (sq ft) (x)|	Price (y)  | Estimated Price($\hat{y}$)
+----------------|------------|---------------------------
+2,104	          |  $399,900$ |          $378,720$
+1,600	          |  $329,900$ |          $288,000$
+2,400	          |  $369,000$ |          $432,000$
 
 ---
 ## Artificial Neural Networks
@@ -161,11 +161,11 @@ Area (sq ft) (x)|	Price (y)    | Estimated Price($\hat{y}$)
 
 <br />
 
-Area (sq ft) (x)|	Price (y)    | Estimated Price($\hat{y}$) | $y-\hat{y}$ | $(y-\hat{y})^2$
-----------------|--------------|----------------------------|-------------|---------------
-2,104	          |  $\$399,900$ |          $\$378,720$       | $\$21$      |  $449$
-1,600	          |  $\$329,900$ |          $\$288,000$       | $\$42$      |  $1756$
-2,400	          |  $\$369,000$ |          $\$432,000$       | $\$-63$     |  $3969$
+Area (sq ft) (x)|	Price (y)  | Estimated Price($\hat{y}$) | $y-\hat{y}$ | $(y-\hat{y})^2$
+----------------|------------|----------------------------|-------------|---------------
+2,104	          |  $399,900$ |          $378,720$         | $21$        |  $449$
+1,600	          |  $329,900$ |          $288,000$         | $42$        |  $1756$
+2,400	          |  $369,000$ |          $432,000$         | $-63$       |  $3969$
 
 ---
 ## Artificial Neural Networks
@@ -660,8 +660,8 @@ My <a href="https://colab.research.google.com/drive/1DNN2PCoOrGoYQv7skznLNm6MZ5-
 * Takes an array and outputs a probability distribution, i.e., <em>the probability
   of the input example belonging to each of the classes</em> in my problem;
 * One of the activation functions available at `Keras`:
-```python
-model.add(Dense(2, activation="softmax"))
+```r
+layer_dense(units = 2, activation = 'softmax')
 ```
 
 
@@ -705,6 +705,119 @@ model.add(Dense(2, activation="softmax"))
 <img src="overfitting.png" width="300px"/>
 
 ---
+
+
+# Interpretation of the Test Set
+
+## Does Perfect Metric on the Test Set Mean the Model is Perfect?
+
+    **Not necessarily:** In no non-trivial problem will you have access to a completely representative database of the problem.
+    Evaluating with a test set *alleviates* but doesn't solve the problem.
+    There will never be enough examples to perfectly model the phenomenon.
+
+---
+
+
+## Analysis of Model Error
+
+### Types of Errors
+
+* Prediction error can be divided into three parts:
+  - **Irreducible Error:** cannot be eliminated regardless of the algorithm used.
+  - **Introduced from the chosen problem framework**.
+  - **Caused by unknown factors**.
+  - **Bias Error:** assumptions made by a model to make the target function easier to learn.
+  - **Variance Error:** the amount the target function estimate will change if different training data are used.
+
+---
+
+
+## Analysis of Model Error
+
+### Bias Error
+
+* Difference between the expected (or average) prediction of our model and the correct value we are trying to predict.
+* Imagine repeating the entire model-building process more than once:
+  - **Each time you gather new data and perform a new analysis, you create a new model.**
+  - **Due to randomness in the underlying data sets, resulting models will have a variety of predictions.**
+  - **Measures how far, on average, predictions of these models are from the correct value.**
+* Our model has bias if it systematically predicts below or above the target variable.
+
+---
+
+
+# Analysis of Model Error
+
+## Variance Error
+
+* In a sense, captures the **model's generalization capability**.
+* How much our prediction would change if we trained it with different data.
+* Ideally, it shouldn't change much from one training data set to the next.
+* Algorithms with high variance are **strongly influenced by the specifics of training data.**
+* Generally, nonlinear machine learning algorithms that are very flexible have **high variance.**
+  - **For example, Polynomial Regression with high-degree polynomials!**
+
+---
+
+
+## Dilemma: Variance vs Bias
+
+* Low bias: suggests fewer assumptions about the shape of the target function.
+  - **Regression Trees, KNN Regression**
+* High bias: suggests more assumptions about the shape of the target function.
+  - **Linear Regression, Logistic Regression**
+* Low variance: suggests small changes in the estimate of the target function with changes in the training data set.
+  - **Linear Regression, Logistic Regression**
+* High variance: suggests large changes in the estimate of the target function with changes in the training data set.
+  - **Regression Trees, KNN Regression**
+
+---
+
+
+## Dilema: Variância x Viés
+
+<img src="variance_x_bias.png" width="300px"/>
+<br />
+
+* Increasing bias will decrease variance.
+* Increasing variance will decrease bias.
+
+---
+
+
+## Dilema: Variância x Viés
+## Tradeoff
+
+<img src="bias_variance1.png" width="300px"/>
+
+---
+
+
+## Dilemma: Variance vs Bias
+
+* A very simple model with few parameters has high Bias and low Variance.
+* A complex model with a large number of parameters will have high Variance and low Bias.
+* One should aim for balance, avoiding overfitting while not underfitting the data.
+
+---
+
+## Dilemma: Variance vs Bias
+
+* Models should try to **generalize** beyond what is observed in the training set.
+* **Regularization** plays a role in controlling the overfitting of classifiers.
+
+---
+
+
+## Visualizing the Overfitting
+### How Decision Trees change after removing a few examples
+
+<img src="fit_tree.png" width="300px"/>
+<img src="fit_tree_mod.png" width="300px"/>
+
+---
+
+
 ## Artificial Neural Networks
 ### Dealing with overfitting
 * <em>Dropout</em> layers:
