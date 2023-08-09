@@ -707,13 +707,13 @@ layer_dense(units = 2, activation = 'softmax')
 ---
 
 
-# Interpretation of the Test Set
+## Interpretation of the Test Set
 
-## Does Perfect Metric on the Test Set Mean the Model is Perfect?
+### Does Perfect Metric on the Test Set Mean the Model is Perfect?
 
-    **Not necessarily:** In no non-trivial problem will you have access to a completely representative database of the problem.
-    Evaluating with a test set *alleviates* but doesn't solve the problem.
-    There will never be enough examples to perfectly model the phenomenon.
+**Not necessarily:** In no non-trivial problem will you have access to a completely representative database of the problem.
+Evaluating with a test set *alleviates* but doesn't solve the problem.
+There will never be enough examples to perfectly model the phenomenon.
 
 ---
 
@@ -724,8 +724,8 @@ layer_dense(units = 2, activation = 'softmax')
 
 * Prediction error can be divided into three parts:
   - **Irreducible Error:** cannot be eliminated regardless of the algorithm used.
-  - **Introduced from the chosen problem framework**.
-  - **Caused by unknown factors**.
+    - **Introduced from the chosen problem framework**.
+    - **Caused by unknown factors**.
   - **Bias Error:** assumptions made by a model to make the target function easier to learn.
   - **Variance Error:** the amount the target function estimate will change if different training data are used.
 
@@ -746,9 +746,9 @@ layer_dense(units = 2, activation = 'softmax')
 ---
 
 
-# Analysis of Model Error
+## Analysis of Model Error
 
-## Variance Error
+### Variance Error
 
 * In a sense, captures the **model's generalization capability**.
 * How much our prediction would change if we trained it with different data.
@@ -756,6 +756,14 @@ layer_dense(units = 2, activation = 'softmax')
 * Algorithms with high variance are **strongly influenced by the specifics of training data.**
 * Generally, nonlinear machine learning algorithms that are very flexible have **high variance.**
   - **For example, Polynomial Regression with high-degree polynomials!**
+
+---
+
+## The Bias-Variance Tradeoff
+
+* **Bias** error arises due to incorrect assumptions made by the learning algorithm. Excessive bias can lead the algorithm to overlook important connections between features and target outcomes, resulting in underfitting.
+
+* **Variance** represents the error stemming from the algorithm's susceptibility to minor variations in the training dataset. Elevated variance might occur when the algorithm models the random noise present in the training data, causing overfitting.
 
 ---
 
@@ -774,9 +782,9 @@ layer_dense(units = 2, activation = 'softmax')
 ---
 
 
-## Dilema: Variância x Viés
+## Dilemma: Variance vs Bias
 
-<img src="variance_x_bias.png" width="300px"/>
+<img src="variance_x_bias.png" width="400px"/>
 <br />
 
 * Increasing bias will decrease variance.
@@ -785,10 +793,10 @@ layer_dense(units = 2, activation = 'softmax')
 ---
 
 
-## Dilema: Variância x Viés
+## Dilemma: Variance vs Bias
 ## Tradeoff
 
-<img src="bias_variance1.png" width="300px"/>
+<img src="bias_variance1.png" width="450px"/>
 
 ---
 
@@ -814,6 +822,14 @@ layer_dense(units = 2, activation = 'softmax')
 
 <img src="fit_tree.png" width="300px"/>
 <img src="fit_tree_mod.png" width="300px"/>
+
+---
+
+## Regularization
+
+* Decreases variance by reducing learning effectiveness.
+* Penalizes model complexity.
+* Nearly all learning algorithms have some form of regularization mechanism.
 
 ---
 
