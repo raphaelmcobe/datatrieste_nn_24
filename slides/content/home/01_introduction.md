@@ -1041,6 +1041,11 @@ $ \text{ReLU(x)} = \max\{0,x\}. $
 * **Why softmax and not the logistic function?** Usually, the logistic function is applied to each output neuron without considering all the others. In this case, softmax results in a probability of the neuron of each class responding to an input stimulus.
 
 ---
+# Building an MNIST solution using Convolutions
+
+<a href="https://colab.research.google.com/drive/1bDRhn3SJQMZslbqLweUY5bpr0QHpT3cv?usp=sharing" target="_blank">Convnet Notebook</a>
+
+---
 # Group Projects
 
 ---
