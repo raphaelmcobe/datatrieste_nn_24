@@ -395,7 +395,7 @@ $x_1$|$x_2$|$y$
 1    |0    |0
 1    |1    |1
 
-{{% fragment %}} <a href="https://colab.research.google.com/drive/10O_OwdFJj9OCNVJJSp8n3_vHhHWrmrbp?usp=sharing" target="_blank">My solution</a>. {{% /fragment %}}
+{{% fragment %}} <a href="https://colab.research.google.com/drive/1aOUtlD401TH6AfwBUs9XeCrxFy5PVLBa?usp=sharing" target="_blank">My solution</a>. {{% /fragment %}}
 
 ---
 ## Artificial Neural Networks
