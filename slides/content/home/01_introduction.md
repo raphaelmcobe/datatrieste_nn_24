@@ -283,19 +283,19 @@ How about addind the <em>Intercept</em>?
 * Focus on enabling <em>fast experimentation</em>;
   * Go from idea to result with the <em>least possible delay</em>;
 * Runs seamlessly on <em>CPU</em> and <em>GPU</em>;
-* Compatible with: <em>Python 2.7-3.8</em> and <em>R</em>;
+* Compatible with: <em>Python 2.7-3.12</em> and <em>R</em>;
 
 ---
 ## Artificial Neural Networks
 ### The <a href="https://keras.io" target="_blank">Keras framework</a>
 * Use the implementation of the tensorflow:
   * Create a sequential model (perceptron)
-```R
-# Import the Keras Library
-library(keras)
+```python
+# Import the Sequential model
+from tensorflow.keras.models import Sequential
 
 # Instantiate the model
-model <- keras_model_sequential()
+model = Sequential()
 ```
 
 ---
@@ -304,11 +304,12 @@ model <- keras_model_sequential()
 * Create a single layer with a single neuron:
   * `units` represent the number of neurons;
 ```python
-# Use the Dense layer
-# Add a forward layer to the model 
-model <- model %>% layer_dense(units = 1, input_shape = c(2))
-```
+# Import the Dense layer
+from tensorflow.keras.layers import Dense
 
+# Add a forward layer to the model
+model.add(Dense(units=1, input_dim=2))
+```
 {{% note %}}
 * Dense means a fully connected layer. 
 {{% /note %}}
@@ -319,15 +320,14 @@ model <- model %>% layer_dense(units = 1, input_shape = c(2))
 * Compile and train the model
   * The compilation creates a <a
     href="https://medium.com/tebs-lab/deep-neural-networks-as-computational-graphs-867fcaa56c9" target="_blank">computational graph</a> of the training;
-```R
-# Specify the loss function (error) and the optimizer 
+```python
+# Specify the loss function (error) and the optimizer
 #   (a variation of the gradient descent method)
+model.compile(loss="mean_squared_error", optimizer="sgd")
 
-model %>% compile(loss = "mean_squared_error", optimizer = "sgd")
-
-# Fit the model using the train data and also 
+# Fit the model using the train data and also
 #   provide the expected result
-model %>% fit(x = train_data_X, y = train_data_Y, epochs = 5)
+model.fit(x=train_data_X, y=train_data_Y)
 ```
 {{% note %}}
 * Computational Graphs:
@@ -343,23 +343,19 @@ model %>% fit(x = train_data_X, y = train_data_Y, epochs = 5)
 ## Artificial Neural Networks
 ### The <a href="https://keras.io" target="_blank">Keras framework</a>
 * Evaluate the quality of the model:
-```r
-# Use evaluate function to get the loss and other metrics that the framework 
-#  makes available 
-model %>% 
-  evaluate(test_data_X, test_data_Y)
-
-## $loss
-## [1] 0.0833252
-## 
-## $accuracy
-## [1] 0.9741
-
+```python
+# Use evaluate function to get the loss and other metrics that the framework
+#  makes available
+loss_and_metrics = model.evaluate(train_data_X, train_data_Y)
+print(loss_and_metrics)
+#0.4043288230895996
 
 # Do a prediction using the trained model
-predictions <- predict(model, mnist$test$x)
-head(predictions, 2)
+prediction = model.predict(train_data_X)
+print(prediction)
 # [[-0.25007164]
+#  [ 0.24998784]
+#  [ 0.24999022]
 #  [ 0.7500497 ]]
 ```
 {{% note %}}
@@ -384,7 +380,7 @@ return 0
 #### Exercise:
 Run the example of the Jupyter notebook:
 <br />
-<a href="https://colab.research.google.com/drive/1SlxcqCXu1PteSxLyy4x-aXZrEhFcdhS7?usp=sharing" target="_blank">Perceptron - OR</a>
+<a href="https://colab.research.google.com/drive/1hNOR60jfru-b0Vb-ec-Y_yF9pyuy8Wtj?usp=sharing" target="_blank">Perceptron - OR</a>
 
 ---
 ## Artificial Neural Networks
@@ -399,7 +395,7 @@ $x_1$|$x_2$|$y$
 1    |0    |0
 1    |1    |1
 
-* <a href="https://colab.research.google.com/drive/10O_OwdFJj9OCNVJJSp8n3_vHhHWrmrbp?usp=sharing" target="_blank">My solution</a>.
+{{% fragment %}} <a href="https://colab.research.google.com/drive/10O_OwdFJj9OCNVJJSp8n3_vHhHWrmrbp?usp=sharing" target="_blank">My solution</a>. {{% /fragment %}}
 
 ---
 ## Artificial Neural Networks
@@ -411,16 +407,22 @@ $x_1$|$x_2$|$y$
 
 Check-out what happens when we try to use the same architecture for solving the
 XOR function <a
-href="https://colab.research.google.com/drive/1g9Sl6XngxF_TEJakdiU1DpOHAKpfwoAR?usp=sharing"
+href="https://colab.research.google.com/drive/1NKIpV-SZ38SU6szy_e2hZNBG7MC2_d9G?usp=sharing"
 target="_blank">here</a>.
 
 ---
 ## Artificial Neural Networks
 ### Understanding the training
 * Plotting the training progress of the XOR ANN:
-```r
-history <- model %>% fit(x_train, y_train, epochs = 200)
-plot(model)
+```python
+history = model.fit(x=X_data, y=Y_data, epochs=2500, verbose=0)
+import matplotlib.pyplot as plt
+plt.plot(history.history['loss'])
+plt.title('Model Training Progression')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Loss'], loc='upper left')
+plt.show()
 ```
 <center><a href="loss_trainning2.png" target="_blank"><img src="loss_trainning2.png" width="250px" /></a></center>
 
@@ -526,10 +528,33 @@ $$y = f^{(3)}(f^{(2)}(f^{(1)}(x)))$$
 
 ---
 ## Artificial Neural Networks
+### Perceptron - Solving the XOR problem
+* Implementing an ANN that can solve the XOR problem:
+  * Add a new layer with a larger number of neurons:
+
+```python
+...
+#Create a layer with 4 neurons as output
+model.add(Dense(units=4), activation="sigmoid", input_dim=2)
+
+# Connect to the first layer that we defined
+model.add(Dense(units=1, activation="sigmoid")
+```
+
+Let's check if that solves our XOR problem <a
+href="https://colab.research.google.com/drive/1hpRRtJuC78uPXJE68oOjRaM03LVV_rgo?usp=sharing"
+target="_blank">here</a>.
+
+{{% note %}}
+Train for little steps and then increase the number of epochs
+{{% /note %}}
+
+---
+## Artificial Neural Networks
 ### Understanding the training  
 * Plot the architecture of the network:
-```r
-plot(model, show_shapes=T)
+```python
+tf.keras.utils.plot_model(model, show_shapes=True, show_layer_names=False)
 ```
 <center><img src="nn_architecture.png" width="300px" /></center>
 
@@ -538,28 +563,6 @@ plot(model, show_shapes=T)
 The ? means that they take as much examples as possible;
 {{% /note %}}
 
----
-## Artificial Neural Networks
-### Perceptron - Solving the XOR problem
-* Implementing an ANN that can solve the XOR problem:
-  * Add a new layer with a larger number of neurons:
-
-```r
-...
-#Create an extra layer with 4 neurons and use the sigmoid activation function:
-model <- model %>% layer_dense(units=8, input_shape=c(2), activation="sigmoid")
-
-# Connect to the first layer that we defined and also apply the sigmoid
-model <- model %>% layer_dense(units=1, activation="sigmoid")
-```
-
-Let's check if that solves our XOR problem <a
-href="https://colab.research.google.com/drive/1cs3--kdfF5nXGgWdTFMQ73r_9k7I_pO1?usp=sharing"
-target="_blank">here</a>.
-
-{{% note %}}
-Train for little steps and then increase the number of epochs
-{{% /note %}}
 
 ---
 ## Artificial Neural Networks
@@ -641,10 +644,10 @@ Minibatch:
 ## Artificial Neural Networks
 ### Multilayer Perceptron - XOR
 * Try another optimizer:
-```r
-model %>% compile(loss = "mean_squared_error", optimizer = "rmsprop")
+```python
+model.compile(loss="mean_squared_error", optimizer="adam")
 ```
-My <a href="https://colab.research.google.com/drive/1DNN2PCoOrGoYQv7skznLNm6MZ5-Mk24m?usp=sharing" target="_blank">solution</a>
+My <a href="https://colab.research.google.com/drive/1tsK3aESxc0xGTVLhry-vwMpK2j8mRl-o?usp=sharing" target="_blank">solution</a>
 
 ---
 ## Artificial Neural Networks
@@ -847,7 +850,7 @@ There will never be enough examples to perfectly model the phenomenon.
 * <em>Dropout</em> layers:
 ```python
 # Drop half of the neurons outputs from the previous layer
-model <- model %>% layer_dropout(rate = 0.5)
+model.add(Dropout(0.5))
 ```
 
 {{% note %}}
@@ -855,6 +858,13 @@ model <- model %>% layer_dropout(rate = 0.5)
 * forces the network to be redundant;
 * the net should be able to provide the right classification for a specific example even if some of the activations are dropped out;
 {{% /note %}}
+
+---
+## How does it realy do it?
+
+<video width="620" height="440" controls>
+  <source src="ann.mp4" type="video/mp4">
+</video>
 
 ---
 ## Artificial Neural Networks
@@ -866,7 +876,7 @@ model <- model %>% layer_dropout(rate = 0.5)
 ---
 ## Artificial Neural Networks
 ### The MNIST MLP
-* Try to improve the classification results using <a href="https://colab.research.google.com/drive/1kXGC4qIcaa8-ui9OByNBT25nZH7yycYr?usp=sharing" target="_blank">this notebook</a>:
+* Try to improve the classification results using <a href="https://colab.research.google.com/drive/1AnGJz_R0PJF0d83ye_3y7NPGuX5YipBi?usp=sharing" target="_blank">this notebook</a>:
 * Things to try:
   * Increase the number of neurons at the first layer;
   * Change the optimizer and the loss function;
@@ -876,14 +886,159 @@ model <- model %>% layer_dropout(rate = 0.5)
 ---
 ## Artificial Neural Networks
 ### The MNIST MLP
-* Try to improve the classification results using <a href="https://colab.research.google.com/drive/1kXGC4qIcaa8-ui9OByNBT25nZH7yycYr?usp=sharing" target="_blank">this notebook</a>:
+* Try to improve the classification results using <a href="https://colab.research.google.com/drive/1AnGJz_R0PJF0d83ye_3y7NPGuX5YipBi?usp=sharing" target="_blank">this notebook</a>:
 * Things to try:
   * Try addind `Dropout` layers;
   * Increase the number of `epochs`;
   * Try to <em>normalize the data</em>!
 
 * What is the best accuracy?
-* <a href="https://colab.research.google.com/drive/1PYgAO-u04vOPCm-XyZPl_ck4RPJ-Jeag?usp=sharing" target="_blank">My solution</a>.
+* <a href="https://colab.research.google.com/drive/1LnkhSA7XbEWMNdaebOXxsOENr6m-0vpZ?usp=sharing" target="_blank">My solution</a>.
+---
+# Convolutional Neural Networks
+
+---
+### Introduction
+
+* **Deep learning** techniques belong to a branch of machine learning that uses neural networks with multiple layers. The basic idea is to employ layers to progressively learn different levels of features from input data. The levels of abstraction increase as more layers are used for feature extraction and learning.
+
+* Among deep learning techniques, special attention has been given to Convolutional Neural Networks (CNNs). These models have a high capacity for data representation, yielding promising results in numerous fields of knowledge.
+
+---
+* The basic idea is to use "raw data" as input and allow the network to learn the most important features for the problem at hand. This eliminates the need to manually extract features (handcrafted features).
+
+<img width="450" src="CNN_Fig1.png" />
+
+---
+* Generally, CNNs are composed of two main modules: (i) feature learning and (ii) classification. Feature learning is performed through convolution, pooling, and activation operations. The classification step typically consists of fully connected layers and a softmax output layer.
+
+<img width="700" src="CNN_Fig2.png" />
+
+---
+* But what makes CNNs so interesting for various pattern classification tasks? The secret lies in the **feature learning** step, where important information (like texture) is learned at different levels. The interesting part is that these networks are less susceptible to rotation, translation, and scale issues.
+
+* To understand how they work, we will first study the feature learning layers and then move on to the classification layers. As mentioned, each layer of the learning step consists mainly of (i) convolution, (ii) pooling, and (iii) activation operations.
+
+---
+### Feature Learning
+
+#### Convolution
+
+* The first operation we will see is **convolution**, which is widely used in image processing and computer vision tasks, such as image filtering (blurring and noise) and edge detection, for example. Let's see an example.
+
+<img width="450" src="CNN_Fig3.png" />
+
+---
+<img width="450" src="CNN_Fig4.png" />
+
+* The central position of the 9x9 input is replaced by its convolution with the 5x5 mask
+* The value is stored in the 5x5 output matrix (feature map).
+* The procedure is repeated until the entire input matrix has been evaluated. 
+
+---
+### What are the hyperparameters involved in a convolution operation?
+
+- **Parameters vs. hyperparameters**.
+  - What type of mask (kernel) will we use?
+  - What is the best dimension?
+  - How many filters will be employed?
+  - What is the value of the stride?
+
+
+---
+* What we have, in practice, are values in the masks that can be interpreted as **weights** that will be learned by the CNN during its training process. 
+* How do we calculate the number of these parameters?
+
+<img width="450" src="CNN_Fig7.png" />
+
+---
+
+| Layer            | Type            | Input   | Output                               |
+|------------------|-----------------|---------|--------------------------------------|
+| Input            | Data            | 0       | 3                                    |
+| Intermediate 1   | Convolutional   | 3       | (27+27)+2 biases = 56                |
+| Intermediate 2   | Convolutional   | 2       | 54+3 biases = 57                     |
+| Intermediate 3   | Flattened       | -       | 20x20x3 = 1,200                      |
+| Output           | Dense           | 1,200   | 1,200x2+2 biases = 2402              |
+
+**Number of parameters to be learned: 2,515.**
+
+---
+### What is the role of the hyperparameter values in a CNN?
+
+- **Kernel size:** plays a very important role. **Small kernels** extract more local information (local features) as size reductions between layers are smaller, allowing for deeper architectures. On the other hand, **larger kernels** result in faster size reductions of feature maps and extract more global information.
+- Stride value: has a similar impact to kernel size, with larger values resulting in faster reductions of feature maps. Smaller stride values result in more features being learned.
+- Since smaller stride values and kernel sizes enable more features to be learned, why not always adopt them? **This requires larger datasets.**
+
+---
+#### In summary, we have to make decisions about the following items regarding a convolution layer:
+
+1. Type of padding.
+2. Kernel size.
+3. Stride value.
+4. Number of filters.
+
+---
+#### Activation
+
+* CNNs are usually composed of numerous layers, making it undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems). Another interesting feature of activation functions is their **non-linearity**, allowing the network to learn non-linear decision functions.
+
+* One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity. Its formulation is given as follows:
+
+$ \text{ReLU(x)} = \max\{0,x\}. $
+
+---
+* Below is the graph of the ReLU(x) function. Note that the function only returns a value when its input is greater than 0, aiding in the training time.
+* The derivative of $ReLU(x)=0$, case $x\leq0$, and $1$ otherwise
+
+<img width="350" src="CNN_Fig10.png" />
+
+---
+#### Pooling
+
+* There are different types of pooling operations, whose main goal is to **decrease the resolution** (downsampling) of the feature maps and add **invariance properties** to the network. The size reduction of feature maps leads to a decrease in the number of parameters to be learned by the network, allowing for more efficient training.
+
+* Among the main types of pooling, we can mention:
+  - Max-Pooling
+  - Average Pooling
+  - Global Pooling
+
+---
+#### Some illustrations to exemplify the functioning of the mentioned types of pooling.
+* Max-Pooling (stride = 2)
+<p><img width="450" src="CNN_Fig8.png" /></p>
+
+---
+#### Some illustrations to exemplify the functioning of the mentioned types of pooling.
+* Average Pooling (stride = 2)
+<p><img width="450" src="CNN_Fig9.png" /></p>
+
+---
+* The global pooling technique is more radical in the context of downsampling, as it reduces the entire feature map to a single value. In this case, we can use either max-pooling or average pooling.
+
+* Generally, max-pooling layers tend to provide better results, as it is more informative to use the highest value within a window than to "mask" them with their average value.
+
+---
+#### Flattening
+
+* Before sending our data through convolution, pooling, and activation layers to the fully connected layers, we need to "flatten" the **tensor** (data). The operation in this layer is quite simple, as we receive input with multiple dimensions (feature maps) and the output is a one-dimensional vector, as illustrated below.
+
+<img style="margin-right:100px;" width="250" src="CNN_Fig11.png" /> 
+<img width="280" src="CNN_Fig12.png" />
+
+---
+#### Fully Connected + Dropout
+
+* The final part consists of adopting fully connected layers, similar to an MLP Neural Network, with a softmax output at the end. It is also common to adopt a regularization technique known as **Dropout**, which "removes" neurons randomly to speed up the training process and prevent overfitting.
+
+<img width="500" src="CNN_Fig13.png" />
+
+---
+* The softmax function $\sigma:\mathbb{R}^K\rightarrow [0,1]^K$ is a generalization of the logistic function, where \(K\) corresponds to the number of classes.
+
+<img width="250" src="CNN_Fig14.png" />
+
+* **Why softmax and not the logistic function?** Usually, the logistic function is applied to each output neuron without considering all the others. In this case, softmax results in a probability of the neuron of each class responding to an input stimulus.
 
 ---
 # Group Projects

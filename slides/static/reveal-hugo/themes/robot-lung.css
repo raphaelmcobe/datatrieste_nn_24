@@ -41,7 +41,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   content: '';
   position: fixed;
 /*  background: #FF4081;*/
-  background: #F16440;
+/*  background: #F16440; */
   z-index: 105; }
   .line.top {
     left: 0;
