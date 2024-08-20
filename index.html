@@ -393,6 +393,78 @@ sheer complexity of connections between neurons;</li>
 <iframe src="manual_NN1.html" height="500px" width="800px">
 </iframe>
 </section><section>
+<h2 id="residuals">Residuals</h2>
+<img src="residuos_ilustracao.png" width="600px">
+</section><section>
+<ul>
+<li>One way to calculate $w_0$ and $w_1$ is based on the sum of squared residuals (RSS - <em>R</em>esidual <em>S</em>um of <em>S</em>quares):</li>
+</ul>
+<p>$J(W) = \frac{1}{2n}\sum_{i=1}^{n} \epsilon_i^2$</p>
+</section><section>
+<h2 id="variation-of-the-cost-function">Variation of the Cost Function</h2>
+<h3 id="examining-epsilon-as-a-function-of-w_0-and-w_1">Examining $\epsilon$ as a function of $w_0$ and $w_1$</h3>
+<p><img src="funcao_custo.png" alt="Cost Function"></p>
+</section><section>
+<h2 id="finding-values-of-w_0-and-w_1">Finding values of $w_0$ and $w_1$</h2>
+<h3 id="gradient-calculation">Gradient Calculation</h3>
+<ul>
+<li>The gradient of a vector is a generalization of the derivative and is represented by the vector operator $\nabla$. This operation is used to minimize our cost function (<em>RSS</em>):</li>
+<li>Method of <em>Ordinary Least Squares</em> (OLS)</li>
+</ul>
+</section><section>
+<h2 id="finding-values-of-w_0-and-w_1-1">Finding values of $w_0 and $w_1$</h2>
+<h3 id="the-problem-with-the-analytical-solution">The problem with the analytical solution</h3>
+<ul>
+<li>The analytical solution in its vector form is:</li>
+</ul>
+<p>$W = (X^T X)^{-1} X^T Y$</p>
+<ul>
+<li>Disadvantages of using the analytical solution:
+<ul>
+<li>$X^T X$ is not always invertible;</li>
+<li>The complexity of computing the inverse is of the order $O(n^3)$:
+<ul>
+<li>If the number of features is high, it can become <em>computationally expensive</em>;</li>
+<li>Extremely high memory consumption.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h2 id="finding-values-of-w_0-and-w_1-2">Finding values of $w_0$ and $w_1$</h2>
+<h3 id="inverse-calculation">Inverse Calculation</h3>
+<font size="6">
+<em>Problem</em>
+</font>
+<p>Imagine a dataset containing $10^5$ features and $10^6$ observations; in this case, $X^T X$ would have $10^5 \times 10^5$ floating points which, at 8 bytes per number, would require <em>80 gigabytes</em>. The inverse calculation would then consume on the order of $O(n^3)$.</p>
+
+
+<span class='fragment ' ><em>80 kilo-yottabytes!!!</em></span>
+
+
+</section><section>
+<h3 id="heading"></h3>
+<font size="5">
+<p align="justify">
+Usually, in classification problems, we have the impression that the more features we have, the better our technique's accuracy will be. However, in real-world problems where we have a <em>limited number of samples</em>, a phenomenon known as the <em>curse of dimensionality</em> is observed. There are several negative effects caused by the indiscriminate increase in features:
+</p>
+</font>
+
+
+<span class='fragment ' ><ul>
+<li><strong>Hughes Phenomenon:</strong> For a finite number of samples, there exists a dimensionality $d^\ast$ beyond which the classification accuracy decreases.</li>
+</ul>
+</span>
+
+
+
+
+<span class='fragment ' ><img src="PCA_Fig2.png" width="300px">
+</span>
+
+
+</section><section>
 <h2 id="artificial-neural-networks-13">Artificial Neural Networks</h2>
 <h3 id="how-to-discover-the-correct-weights">How to discover the correct weights?</h3>
 <ul>
@@ -423,6 +495,17 @@ sheer complexity of connections between neurons;</li>
 <li>With a single weight:</li>
 </ul>
 <center><img src="gd1.jpeg" width="500px"/></center>
+</section><section>
+<h2 id="finding-values-of-w_0-and-w_1-3">Finding values of $w_0$ and $w_1$</h2>
+<h3 id="gradient-descent-technique">Gradient Descent Technique</h3>
+<ul>
+<li>Iterative calculation of the matrix $W$ with:</li>
+</ul>
+<p>$w_0^{(t+1)} = w_0^{(t)} - \alpha \frac{\partial RSS}{\partial w_0}$</p>
+<p>$w_1^{(t+1)} = w_1^{(t)} - \alpha \frac{\partial RSS}{\partial w_1}$</p>
+<ul>
+<li>Where $\alpha$ is the Learning Rate, i.e., the step size towards the minimum cost value.</li>
+</ul>
 </section><section>
 <h2 id="artificial-neural-networks-16">Artificial Neural Networks</h2>
 <h3 id="gradient-descent-2">Gradient Descent</h3>
@@ -729,6 +812,40 @@ and no), won&rsquo;t help us to achieve this objective.</p>
 </ul>
 </aside>
 </section><section>
+<h2 id="some-examples-of-activation-functions">Some examples of activation functions:</h2>
+<p><strong>Logistic function (sigmoid):</strong></p>
+<p>$g(a) = \frac{1}{1+e^{-a}}, \text{ such that } g(a)\in[0,1]$</p>
+<p><br /><br /></p>
+<p><strong>Hyperbolic tangent function:</strong></p>
+<p>$g(a) = 2\sigma(2a)-1, \text{ such that } g(a)\in[-1,1]$
+where $\sigma(x)$ corresponds to the <strong>logistic function</strong>.</p>
+</section><section>
+<h2 id="activation-functions-2">Activation Functions</h2>
+<p>It is desirable that an activation function is <strong>differentiable</strong>.</p>
+<p>How to choose it? 
+
+<span class='fragment ' >It depends on your application.</span>
+
+</p>
+<img src="Neural_Networks_Fig3.png" width=250px/>
+<br/>
+<font size="5">  
+<ul>
+<li>Assume $g(a) = \frac{1}{1+e^{-a}}$.</li>
+<li>We have that $g^\prime(a) = g(a)(1-g(a))$.</li>
+<li>Notice that $g^\prime(a)$ <strong>saturates</strong> when $a &gt; 5$ or $a &lt; -5$.</li>
+<li>Furthermore, $g^\prime(a) &lt; 1$ for all $a$. This means that for networks with many layers, the gradient tends to <strong>vanish</strong> during training.</li>
+</ul>
+</font>
+</section><section>
+<h2 id="activation-functions-3">Activation Functions</h2>
+<img src="Neural_Networks_Fig4.png" width=250px/>
+<ul>
+<li>Assume $g(a) = 2\sigma(2a)-1$.</li>
+<li>We have that $g^\prime(a) = 1-g^2(a)$.</li>
+<li>Although saturation occurs, $g^\prime(a)$ reaches higher values, even reaching a maximum of 1 when $a = 0$.</li>
+</ul>
+</section><section>
 <h2 id="artificial-neural-networks-34">Artificial Neural Networks</h2>
 <h3 id="the-bias-1">The Bias</h3>
 <center><img src="bias1.png" width="600px"/></center>
@@ -931,7 +1048,7 @@ dataset</em>;</li>
 <ul>
 <li><a href="adagrad.gif" target="_blank">Adagrad</a>, <a href="rmsprop.gif" target="_blank">RMSProp</a>, <a href="adam.gif" target="_blank">Adam</a>;</li>
 </ul>
-<h6 id="heading"></h6>
+<h6 id="heading-1"></h6>
 <p><br /><br /></p>
 <center>
 <h6 id="animations-taken-from-vikashraj-luhaniwal-a-hrefhttpstowardsdatasciencecomwhy-gradient-descent-isnt-enough-a-comprehensive-introduction-to-optimization-algorithms-in-59670fd5c096-target--_blankposta-1">Animations taken from Vikashraj Luhaniwal <a href="https://towardsdatascience.com/why-gradient-descent-isnt-enough-a-comprehensive-introduction-to-optimization-algorithms-in-59670fd5c096" target = "_blank">post</a>.</h6>
@@ -984,6 +1101,19 @@ of the input example belonging to each of the classes</em> in my problem;</li>
 <li>Softmax - function that takes as input a vector of K real numbers, and normalizes it into a probability distribution</li>
 </ul>
 </aside>
+</section><section>
+<h2 id="the-softmax-activation">The Softmax Activation</h2>
+<ul>
+<li>The softmax function $\sigma:\mathbb{R}^K\rightarrow [0,1]^K$ is a generalization of the logistic function, where $K$ corresponds to the number of classes</li>
+</ul>
+<img width="250" src="CNN_Fig14.png" />
+<ul>
+<li><strong>Why softmax and not the logistic function?</strong>
+<ul>
+<li>Usually, the logistic function is applied to each output neuron without considering all the others. In this case, softmax results in a probability of the neuron of each class responding to an input stimulus</li>
+</ul>
+</li>
+</ul>
 </section><section>
 <h2 id="artificial-neural-networks-51">Artificial Neural Networks</h2>
 <h3 id="loss-functions">Loss functions</h3>
@@ -1235,51 +1365,102 @@ model.add(Dropout(0.5))
 </ul>
 </li>
 <li>
-<p>What is the best accuracy?</p>
-</li>
-<li>
-<p><a href="https://colab.research.google.com/drive/1LnkhSA7XbEWMNdaebOXxsOENr6m-0vpZ?usp=sharing" target="_blank">My solution</a>.</p>
+<p>What is the best accuracy?
+
+
+<span class='fragment ' ><ul>
+<li><a href="https://colab.research.google.com/drive/1LnkhSA7XbEWMNdaebOXxsOENr6m-0vpZ?usp=sharing" target="_blank">My solution</a>.</li>
+</ul>
+</span>
+
+</p>
 </li>
 </ul>
 </section><section>
 <h1 id="convolutional-neural-networks">Convolutional Neural Networks</h1>
 </section><section>
-<h3 id="introduction">Introduction</h3>
+<h2 id="introduction">Introduction</h2>
 <ul>
-<li>
-<p><strong>Deep learning</strong> techniques belong to a branch of machine learning that uses neural networks with multiple layers. The basic idea is to employ layers to progressively learn different levels of features from input data. The levels of abstraction increase as more layers are used for feature extraction and learning.</p>
-</li>
-<li>
-<p>Among deep learning techniques, special attention has been given to Convolutional Neural Networks (CNNs). These models have a high capacity for data representation, yielding promising results in numerous fields of knowledge.</p>
+<li><strong>Deep learning</strong>
+<ul>
+<li>Branch of machine learning that uses neural networks with <em>multiple layers</em></li>
+<li>Employ layers to progressively learn <em>different levels of features</em> from input data</li>
+<li>Abstraction increase as more layers are used for <em>feature extraction</em> and learning</li>
+</ul>
 </li>
 </ul>
+
+
+<span class='fragment ' ><ul>
+<li>Among deep learning techniques, special attention has been given to <em>Convolutional Neural Networks</em> (CNNs).</li>
+<li>These models have a <em>high capacity for data representation</em>, yielding promising results in numerous fields of knowledge.</li>
+</ul>
+</span>
+
+
 </section><section>
+<h2 id="convolutional-neural-networks-1">Convolutional Neural Networks</h2>
 <ul>
-<li>The basic idea is to use &ldquo;raw data&rdquo; as input and allow the network to learn the most important features for the problem at hand. This eliminates the need to manually extract features (handcrafted features).</li>
+<li>The basic idea is to use <em>raw data</em> as input</li>
+<li>Allow the network to learn the <em>most important features</em> for the problem at hand.</li>
+<li><em>Eliminates the need to manually extract features</em> (handcrafted features).</li>
 </ul>
 <img width="450" src="CNN_Fig1.png" />
 </section><section>
+<h2 id="convolutional-neural-networks-2">Convolutional Neural Networks</h2>
 <ul>
-<li>Generally, CNNs are composed of two main modules: (i) feature learning and (ii) classification. Feature learning is performed through convolution, pooling, and activation operations. The classification step typically consists of fully connected layers and a softmax output layer.</li>
-</ul>
-<img width="700" src="CNN_Fig2.png" />
-</section><section>
-<ul>
-<li>
-<p>But what makes CNNs so interesting for various pattern classification tasks? The secret lies in the <strong>feature learning</strong> step, where important information (like texture) is learned at different levels. The interesting part is that these networks are less susceptible to rotation, translation, and scale issues.</p>
+<li>Generallycomposed of two  modules:
+
+
+<span class='fragment ' ><ol>
+<li>Feature learning: performed through convolution, pooling, and activation operations.</li>
+</ol>
+</span>
+
+
+
+
+<span class='fragment ' ><ol start="2">
+<li>Classification: typically  fully connected layers and a softmax output layer.</li>
+</ol>
+</span>
+
 </li>
-<li>
-<p>To understand how they work, we will first study the feature learning layers and then move on to the classification layers. As mentioned, each layer of the learning step consists mainly of (i) convolution, (ii) pooling, and (iii) activation operations.</p>
+</ul>
+
+
+<span class='fragment ' ><img width="500" src="CNN_Fig2.png" />
+</span>
+
+
+</section><section>
+<h2 id="convolutional-neural-networks-3">Convolutional Neural Networks</h2>
+<ul>
+<li>What makes CNNs so interesting for various pattern classification tasks?</li>
+<li><strong>feature learning</strong>
+<ul>
+<li>Important information (like texture) is learned at different levels</li>
+</ul>
+</li>
+<li>Less susceptible to <em>rotation</em>, <em>translation</em>, and <em>scale issues</em>.</li>
+<li>To understand how they work, we will first study the feature learning layers
+<ul>
+<li>(i) convolution, (ii) pooling, and (iii) activation operations.</li>
+</ul>
 </li>
 </ul>
 </section><section>
-<h3 id="feature-learning">Feature Learning</h3>
-<h4 id="convolution">Convolution</h4>
+<h2 id="feature-learning">Feature Learning</h2>
+<h3 id="convolution">Convolution</h3>
 <ul>
-<li>The first operation we will see is <strong>convolution</strong>, which is widely used in image processing and computer vision tasks, such as image filtering (blurring and noise) and edge detection, for example. Let&rsquo;s see an example.</li>
+<li><em>Convolution</em> are widely used in image processing and computer vision tasks, such as image filtering (blurring and noise) and edge detection
+<br /><br /></li>
 </ul>
-<img width="450" src="CNN_Fig3.png" />
+<center>
+<img width="650" src="CNN_Fig3.png" />
+</center>
 </section><section>
+<h2 id="convolution-1">Convolution</h2>
 <img width="450" src="CNN_Fig4.png" />
 <ul>
 <li>The central position of the 9x9 input is replaced by its convolution with the 5x5 mask</li>
@@ -1287,24 +1468,33 @@ model.add(Dropout(0.5))
 <li>The procedure is repeated until the entire input matrix has been evaluated.</li>
 </ul>
 </section><section>
-<h3 id="what-are-the-hyperparameters-involved-in-a-convolution-operation">What are the hyperparameters involved in a convolution operation?</h3>
-<ul>
-<li><strong>Parameters vs. hyperparameters</strong>.
-<ul>
+<h2 id="what-are-the-hyperparameters-involved-in-a-convolution-operation">What are the hyperparameters involved in a convolution operation?</h2>
+
+
+<span class='fragment ' ><h3 id="parameters-vs-hyperparameters">Parameters vs. hyperparameters</h3>
+</span>
+
+
+
+
+<span class='fragment ' ><ul>
 <li>What type of mask (kernel) will we use?</li>
 <li>What is the best dimension?</li>
 <li>How many filters will be employed?</li>
 <li>What is the value of the stride?</li>
 </ul>
-</li>
-</ul>
+</span>
+
+
 </section><section>
+<h2 id="number-of-parameters">Number of Parameters</h2>
 <ul>
-<li>What we have, in practice, are values in the masks that can be interpreted as <strong>weights</strong> that will be learned by the CNN during its training process.</li>
+<li>Values in the masks that can be interpreted as <em>weights</em>: learned by the CNN during its training process.</li>
 <li>How do we calculate the number of these parameters?</li>
 </ul>
 <img width="450" src="CNN_Fig7.png" />
 </section><section>
+<h2 id="number-of-parameters-1">Number of Parameters</h2>
 <table>
 <thead>
 <tr>
@@ -1351,92 +1541,135 @@ model.add(Dropout(0.5))
 </section><section>
 <h3 id="what-is-the-role-of-the-hyperparameter-values-in-a-cnn">What is the role of the hyperparameter values in a CNN?</h3>
 <ul>
-<li><strong>Kernel size:</strong> plays a very important role. <strong>Small kernels</strong> extract more local information (local features) as size reductions between layers are smaller, allowing for deeper architectures. On the other hand, <strong>larger kernels</strong> result in faster size reductions of feature maps and extract more global information.</li>
-<li>Stride value: has a similar impact to kernel size, with larger values resulting in faster reductions of feature maps. Smaller stride values result in more features being learned.</li>
-<li>Since smaller stride values and kernel sizes enable more features to be learned, why not always adopt them? <strong>This requires larger datasets.</strong></li>
+<li><em>Kernel size:</em>
+<ul>
+<li><strong>Small kernels</strong> extract more local information (local features) with size reductions between layers smaller (deeper architectures)</li>
+<li><strong>Larger kernels</strong>  faster size reductions of feature maps and extract more global information</li>
 </ul>
+</li>
+<li><em>Stride value</em>: similar impact to kernel size
+<ul>
+<li><strong>Larger values</strong>: faster reductions of feature maps</li>
+<li><strong>Smaller stride</strong>: more features being learned</li>
+</ul>
+</li>
+</ul>
+<p>
+
+<span class='fragment ' >Since smaller stride values and kernel sizes enable more features to be learned, why not always adopt them?</span>
+
+ 
+
+<span class='fragment ' ><strong>This requires larger datasets.</strong></span>
+
+</p>
 </section><section>
+<h2 id="convolutions">Convolutions</h2>
 <h4 id="in-summary-we-have-to-make-decisions-about-the-following-items-regarding-a-convolution-layer">In summary, we have to make decisions about the following items regarding a convolution layer:</h4>
 <ol>
-<li>Type of padding.</li>
-<li>Kernel size.</li>
-<li>Stride value.</li>
-<li>Number of filters.</li>
+
+
+<span class='fragment ' ><li><em>Type of padding</em></li></span>
+
+
+
+
+<span class='fragment ' ><li><em>Kernel size</em></li></span>
+
+
+
+
+<span class='fragment ' ><li><em>Stride value</em></li></span>
+
+
+
+
+<span class='fragment ' ><li><em>Number of filters</em></li></span>
+
+
 </ol>
 </section><section>
-<h4 id="activation">Activation</h4>
+<h2 id="activation">Activation</h2>
 <ul>
 <li>
-<p>CNNs are usually composed of numerous layers, making it undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems). Another interesting feature of activation functions is their <strong>non-linearity</strong>, allowing the network to learn non-linear decision functions.</p>
+<p>CNNs are usually composed of numerous layers: undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems).</p>
 </li>
 <li>
-<p>One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity. Its formulation is given as follows:</p>
+<p><strong>Non-linearity</strong>, allowing the network to learn non-linear decision functions.</p>
+</li>
+<li>
+<p>One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity:</p>
 </li>
 </ul>
 <p>$ \text{ReLU(x)} = \max{0,x}. $</p>
 </section><section>
+<h2 id="activation-1">Activation</h2>
+<img width="350" src="CNN_Fig10.png" />
 <ul>
-<li>Below is the graph of the ReLU(x) function. Note that the function only returns a value when its input is greater than 0, aiding in the training time.</li>
+<li>Note that the function only returns a value when its input is greater than 0, aiding in the training time.</li>
 <li>The derivative of $ReLU(x)=0$, case $x\leq0$, and $1$ otherwise</li>
 </ul>
-<img width="350" src="CNN_Fig10.png" />
 </section><section>
-<h4 id="pooling">Pooling</h4>
+<h2 id="pooling">Pooling</h2>
 <ul>
-<li>
-<p>There are different types of pooling operations, whose main goal is to <strong>decrease the resolution</strong> (downsampling) of the feature maps and add <strong>invariance properties</strong> to the network. The size reduction of feature maps leads to a decrease in the number of parameters to be learned by the network, allowing for more efficient training.</p>
-</li>
-<li>
-<p>Among the main types of pooling, we can mention:</p>
+<li><strong>Decrease the resolution</strong> (downsampling) of the feature maps and</li>
+<li>Add <strong>invariance properties</strong> to the network.</li>
+<li>Feature maps size reduction leads to a decrease in the number of parameters to be learned by the network
 <ul>
-<li>Max-Pooling</li>
-<li>Average Pooling</li>
-<li>Global Pooling</li>
+<li><em>More efficient training</em></li>
 </ul>
 </li>
+<li><em>Max-Pooling</em></li>
+<li><em>Average Pooling</em></li>
+<li><em>Global Pooling</em></li>
 </ul>
 </section><section>
-<h4 id="some-illustrations-to-exemplify-the-functioning-of-the-mentioned-types-of-pooling">Some illustrations to exemplify the functioning of the mentioned types of pooling.</h4>
+<h3 id="some-illustrations-to-exemplify-the-functioning-of-the-mentioned-types-of-pooling">Some illustrations to exemplify the functioning of the mentioned types of pooling.</h3>
 <ul>
 <li>Max-Pooling (stride = 2)</li>
 </ul>
 <p><img width="450" src="CNN_Fig8.png" /></p>
 </section><section>
-<h4 id="some-illustrations-to-exemplify-the-functioning-of-the-mentioned-types-of-pooling-1">Some illustrations to exemplify the functioning of the mentioned types of pooling.</h4>
+<h3 id="some-illustrations-to-exemplify-the-functioning-of-the-mentioned-types-of-pooling-1">Some illustrations to exemplify the functioning of the mentioned types of pooling.</h3>
 <ul>
 <li>Average Pooling (stride = 2)</li>
 </ul>
 <p><img width="450" src="CNN_Fig9.png" /></p>
 </section><section>
+<h2 id="pooling-1">Pooling</h2>
 <ul>
-<li>
-<p>The global pooling technique is more radical in the context of downsampling, as it reduces the entire feature map to a single value. In this case, we can use either max-pooling or average pooling.</p>
+<li>Global Pooling
+<ul>
+<li>More radical in the context of downsampling</li>
+<li>Reduces the entire feature map to a single value</li>
+<li>In this case, we can use either max-pooling or average pooling</li>
+</ul>
 </li>
-<li>
-<p>Generally, max-pooling layers tend to provide better results, as it is more informative to use the highest value within a window than to &ldquo;mask&rdquo; them with their average value.</p>
+<li>Generally, max-pooling layers tend to provide better results
+<ul>
+<li>more informative to use the highest value within a window than to &ldquo;mask&rdquo; them with their average value</li>
+</ul>
 </li>
 </ul>
 </section><section>
-<h4 id="flattening">Flattening</h4>
+<h2 id="flattening">Flattening</h2>
 <ul>
-<li>Before sending our data through convolution, pooling, and activation layers to the fully connected layers, we need to &ldquo;flatten&rdquo; the <strong>tensor</strong> (data). The operation in this layer is quite simple, as we receive input with multiple dimensions (feature maps) and the output is a one-dimensional vector, as illustrated below.</li>
+<li>Before sending our data to the fully connected layers, we need to &ldquo;flatten&rdquo; the <strong>tensor</strong> (data)</li>
+<li>Receive input with multiple dimensions (feature maps) and the output is a one-dimensional vector</li>
 </ul>
 <img style="margin-right:100px;" width="250" src="CNN_Fig11.png" /> 
 <img width="280" src="CNN_Fig12.png" />
 </section><section>
-<h4 id="fully-connected--dropout">Fully Connected + Dropout</h4>
+<h2 id="fully-connected--dropout">Fully Connected + Dropout</h2>
 <ul>
-<li>The final part consists of adopting fully connected layers, similar to an MLP Neural Network, with a softmax output at the end. It is also common to adopt a regularization technique known as <strong>Dropout</strong>, which &ldquo;removes&rdquo; neurons randomly to speed up the training process and prevent overfitting.</li>
+<li>The final part consists of adopting fully connected layers
+<ul>
+<li>Similar to an MLP Neural Network, with a softmax output at the end</li>
+<li>It is also common to adopt a regularization technique known as <strong>Dropout</strong>, which &ldquo;removes&rdquo; neurons randomly to speed up the training process and prevent overfitting</li>
+</ul>
+</li>
 </ul>
 <img width="500" src="CNN_Fig13.png" />
-</section><section>
-<ul>
-<li>The softmax function $\sigma:\mathbb{R}^K\rightarrow [0,1]^K$ is a generalization of the logistic function, where (K) corresponds to the number of classes.</li>
-</ul>
-<img width="250" src="CNN_Fig14.png" />
-<ul>
-<li><strong>Why softmax and not the logistic function?</strong> Usually, the logistic function is applied to each output neuron without considering all the others. In this case, softmax results in a probability of the neuron of each class responding to an input stimulus.</li>
-</ul>
 </section><section>
 <h1 id="building-an-mnist-solution-using-convolutions">Building an MNIST solution using Convolutions</h1>
 <p><a href="https://colab.research.google.com/drive/1bDRhn3SJQMZslbqLweUY5bpr0QHpT3cv?usp=sharing" target="_blank">Convnet Notebook</a></p>
@@ -1485,6 +1718,433 @@ model.add(Dropout(0.5))
 <h2 id="artificial-neural-networks-65">Artificial Neural Networks</h2>
 <h3 id="covid19-diagnosis-1">COVID19 Diagnosis</h3>
 <p>Run this <a href="https://colab.research.google.com/drive/1S1UQxmDHewXrR_C69mZmoXaP57nGH2X6?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the CT Image Classification.</p>
+</section>
+    <section><h1 id="autoencoders">Autoencoders</h1>
+</section><section>
+<h3 id="autoencoders-1">Autoencoders</h3>
+<h4 id="some-definitions">Some Definitions:</h4>
+<ul>
+<li>Unsupervised learning algorithm that applies backpropagation, setting the target values to be equal to the inputs:
+<ul>
+<li>Uses $y^{(i)} = x^{(i)}$</li>
+<li><em>Semi-supervised</em></li>
+</ul>
+</li>
+<li>One (or more) hidden layers that describe a latent space encoding used to represent the input data.</li>
+<li>Two parts:
+<ul>
+<li>Encoder function $h = f(x)$, and</li>
+<li>Decoder function that produces the <em>reconstruction</em> $r = g(h)$.</li>
+</ul>
+</li>
+<li>Designed to be <em>incapable of perfectly copying the data</em>.</li>
+</ul>
+
+
+<span class='fragment ' ><p><strong>Question:</strong> Why is simply learning to set $g(f(x)) = x$ everywhere not particularly useful?</p>
+</span>
+
+
+</section><section>
+<h3 id="autoencoders-2">Autoencoders</h3>
+<h4 id="some-definitions-1">Some Definitions:</h4>
+<ul>
+<li>Special case of feedforward networks</li>
+<li>Trained with the <em>same techniques</em>, such as gradient descent with minibatch, backpropagation, etc.</li>
+<li>Restricted to only approximately copying, i.e., producing data that <em>merely resembles the training data</em>.</li>
+<li>Forced to prioritize only certain <em>aspects</em> of the input:
+<ul>
+<li>Often learns useful properties of the data, e.g., relevant features.</li>
+</ul>
+</li>
+<li>Traditionally used for <em>dimensionality reduction</em> or <em>feature learning</em>.</li>
+</ul>
+</section><section>
+<h3 id="autoencoders-3">Autoencoders</h3>
+<h4 id="example">Example:</h4>
+<p align="justify">
+Suppose the inputs $x$ are pixel intensity values of a <em>10×10 image</em> (100 pixels) - $n = 100$, and there are $s_2 = 50$ hidden units in layer $L_2$.
+</p>
+<p align="justify">
+From the definition of Autoencoders, we have $y \in \mathcal{R}^{100}$. Since there are only 50 hidden units, the network is forced to learn a "compressed" representation of the input.
+</p>
+<p align="justify">
+Given only the activation vector of hidden units $a^{(2)} \in \mathcal{R}^{50}$, it must attempt to "reconstruct" the 100-pixel input $x$.
+</p>
+</section><section>
+<h3 id="autoencoders-4">Autoencoders</h3>
+<h4 id="some-definitions-2">Some Definitions:</h4>
+<ul>
+<li>If there is any underlying structure in the data, such as some of the input attributes being correlated, then this algorithm <em>will be able to discover some of these correlations</em>.</li>
+<li>This simple form of autoencoder will likely learn a low-dimensional representation very similar to PCA</li>
+<li>Can be thought of as a <em>data compression algorithm</em></li>
+<li>The compression and decompression functions are:
+<ol>
+<li>Data-specific,</li>
+<li>Lossy, and</li>
+<li>Automatically learned from examples rather than designed by us.</li>
+</ol>
+</li>
+</ul>
+</section><section>
+<h3 id="autoencoders-5">Autoencoders</h3>
+<h4 id="some-definitions-3">Some Definitions:</h4>
+<p><img src="pca-vs-ae.png" alt="PCA vs. Autoencoder"></p>
+</section><section>
+<h3 id="autoencoders-6">Autoencoders</h3>
+<h4 id="questions">Questions:</h4>
+<ol>
+<li>Why don't Autoencoders represent optimal compression algorithms <em>for general applications</em>?</li>
+
+
+<span class='fragment ' ><li>Why do they <em>need to be lossy</em>?</li>
+</span>
+
+
+
+
+<span class='fragment ' ><li>Would an autoencoder trained on face images do a good job compressing tree images?</li>
+</span>
+
+
+</section><section>
+<h3 id="autoencoders-7">Autoencoders</h3>
+<h4 id="so-what-are-they-good-for">So, What Are They Good For?</h4>
+<ul>
+<li><em>Data Compression?</em>
+<ul>
+<li>Almost impossible to outperform standard algorithms like JPEG, MP3, etc.;</li>
+<li>We can <strong>improve performance by restricting the type of data</strong> it uses;
+<ul>
+<li><strong>This reduces generalization capability.</strong></li>
+</ul>
+</li>
+<li>Generally impractical for real-world data compression/compaction problems:
+<ul>
+<li>Can only be used on data similar to what it was trained on.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="autoencoders-8">Autoencoders</h3>
+<h4 id="so-what-are-they-good-for-1">So, What Are They Good For?</h4>
+<ul>
+<li><em>Dimensionality Reduction:</em>
+<ul>
+<li>If the decoder is linear and the cost function is MSE, an Autoencoder learns to span the same subspace as PCA.</li>
+</ul>
+</li>
+<li><em>Denoising:</em>
+<ul>
+<li>The data is partially corrupted by noise;</li>
+<li>The model is trained to predict the original, non-corrupted data as its output.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="undercomplete-autoencoders">Undercomplete Autoencoders</h3>
+<ul>
+<li>Autoencoder whose coding dimension is smaller than the input dimension;</li>
+<li>Forces the autoencoder to capture the most relevant attributes of the training data;
+<ul>
+<li>Also known as bottlenecks;</li>
+</ul>
+</li>
+<li>Minimizes the cost function, where $f$ is the encoder function and $g$ is the decoder function, by adjusting parameters $\theta$ and $\phi$:
+$$
+J(w,w\prime) = \frac{1}{n} \sum_{i=1}^{n} (x^{(i)} - f_w(g_{w\prime}(x^{(i)})))^2
+$$</li>
+<li>Nonlinear encoder functions $f$, as well as decoders $g$, can learn a more powerful nonlinear generalization than PCA.</li>
+</ul>
+</section><section>
+<h3 id="undercomplete-autoencoders-1">Undercomplete Autoencoders</h3>
+<h4 id="implementation">Implementation</h4>
+<p>General Architecture:</p>
+<img src="autoencoder1.png" width="700px">
+<p><em>Source: <a href="https://lilianweng.github.io/posts/2018-08-12-vae/">Autoencoder architecture by Lilian Weng</a></em></p>
+</section><section>
+<h3 id="undercomplete-autoencoders-2">Undercomplete Autoencoders</h3>
+<h4 id="implementation-1">Implementation:</h4>
+<p>Dimensionality reduction for 3D data:</p>
+<pre><code class="language-python">encoding_dim = 2
+input_layer = keras.Input(shape=(3,))
+encoded = layers.Dense(encoding_dim, activation=&quot;sigmoid&quot;)(input_layer)
+decoded = layers.Dense(3, activation=&quot;sigmoid&quot;)(encoded)
+autoencoder = keras.Model(input_layer, decoded)
+autoencoder.compile(loss=&quot;mse&quot;, optimizer=&quot;SGD&quot;)
+</code></pre>
+</section><section>
+<h3 id="undercomplete-autoencoders-3">Undercomplete Autoencoders</h3>
+<h4 id="implementation-2">Implementation</h4>
+<p><img src="autoencoder2.png" alt="Autoencoder architecture"></p>
+</section><section>
+<h3 id="undercomplete-autoencoders-4">Undercomplete Autoencoders</h3>
+<h4 id="implementation-3">Implementation</h4>
+<img src="autoencoder3.png" width="300px">
+<img src="autoencoder4.png" width="300px">
+</section><section>
+<h3 id="undercomplete-autoencoders-5">Undercomplete Autoencoders</h3>
+<h4 id="what-are-they-not-good-at">What Are They Not Good At?</h4>
+<img src="autoencoder5.png" width="500px">
+</section><section>
+<h3 id="undercomplete-autoencoders-6">Undercomplete Autoencoders</h3>
+<h4 id="what-are-they-not-good-at-1">What Are They Not Good At?</h4>
+<ul>
+<li>Some of the biggest challenges regarding the latent space are:
+<ul>
+<li><em>Gaps in the latent space</em>: we don&rsquo;t know what data points might look like in those spaces.</li>
+<li><em>Separability in the latent space</em>: there are also regions where the labels are intermixed/randomly scattered.</li>
+<li><em>Discrete latent space</em>: we don&rsquo;t have a trained statistical model for an arbitrary input.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="autoencoders-9">Autoencoders</h3>
+<h4 id="limitations">Limitations</h4>
+<ul>
+<li>Unfortunately, autoencoders <strong>do not learn anything useful</strong> if the encoder and decoder <strong>have too much capacity</strong>.</li>
+<li>This also happens if the latent space has the same dimension as the input.</li>
+<li>Even a linear encoder and decoder can <em>learn to copy the input</em> to the output:
+<ul>
+<li><em>Nothing useful is learned about the data distribution.</em></li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="regularized-autoencoders">Regularized Autoencoders</h3>
+<ul>
+<li>Uses a loss function that &ldquo;encourages&rdquo; the model to have other properties, such as sparsity of the representation and robustness to noise or missing inputs;</li>
+<li>Can be nonlinear and overcomplete, but still learn something useful about the data distribution;</li>
+<li>The two most common Regularized Autoencoders are:
+<ul>
+<li><strong>Sparse Autoencoders</strong>: sparsity penalty added to their original cost function; -&gt; Eq. 1</li>
+<li><strong>Denoising Autoencoders</strong>: add noise (Gaussian, for example) to the inputs, forcing the model to learn important features;</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="regularized-autoencoders-1">Regularized Autoencoders</h3>
+<h4 id="sparse-autoencoders">Sparse Autoencoders</h4>
+<ul>
+<li>Essentially an autoencoder whose training criterion involves sparsity as a penalty term;</li>
+<li>Has a latent dimension larger than the input or output dimensions;</li>
+<li>Typically used to <strong>learn features for another task</strong>, such as classification;</li>
+<li>Think of the penalty simply as a <strong>regularization term</strong>;</li>
+<li>We want to restrict neurons to be <strong>inactive most of the time</strong>;</li>
+<li>Reduces the propensity for overfitting the network;</li>
+<li>It can <strong>no longer copy the input through certain neurons</strong>:
+<ul>
+<li>in each run, <strong>these neurons may not be the active ones</strong>.</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="regularized-autoencoders-2">Regularized Autoencoders</h3>
+<h4 id="sparse-autoencoders-1">Sparse Autoencoders</h4>
+<p><img src="autoencoder6.png" alt="Sparse Autoencoder">
+<em>Source: Image by Shreya Chaudhary</em></p>
+</section><section>
+<h3 id="regularized-autoencoders-3">Regularized Autoencoders</h3>
+<h4 id="sparse-autoencoders---implementation">Sparse Autoencoders - Implementation</h4>
+<p>In Keras, this can be done by adding a regularizer with an <code>activity_regularizer</code> to the <code>Dense</code> layer:</p>
+<pre><code class="language-python">encoded = layers.Dense(encoding_dim, activation='relu',
+                activity_regularizer=regularizers.l1(10e-5))(input_img)
+</code></pre>
+<p>With the regularization added, the model is less likely to overfit and <strong>can be trained longer</strong>.</p>
+</section><section>
+<h3 id="regularized-autoencoders-4">Regularized Autoencoders</h3>
+<h4 id="denoising-autoencoders">Denoising Autoencoders</h4>
+<ul>
+<li>The input is <em>partially corrupted</em> by adding noise or &ldquo;masking&rdquo; some values of the input vector stochastically;</li>
+<li>The model is trained to <em>recover the original input</em> (note: not the corrupted one);</li>
+</ul>
+<img src="denoising_autoencoder.png" width="400px">
+<p>where $\mathcal{M_D}$ defines the mapping of true data samples to noisy or corrupted ones.</p>
+</section><section>
+<h3 id="regularized-autoencoders-5">Regularized Autoencoders</h3>
+<p><strong>Denoising Autoencoders</strong></p>
+<p><img src="autoencoder7.png" alt="Denoising Autoencoder"></p>
+<p><em>Source: Image by Lilian Weng</em></p>
+</section><section>
+<h3 id="regularized-autoencoders-6">Regularized Autoencoders</h3>
+<h4 id="denoising-autoencoders-1">Denoising Autoencoders</h4>
+<ul>
+<li>Motivated by the fact that humans can easily recognize an object even with partially occluded vision;</li>
+<li>To &ldquo;repair&rdquo; the input, the DAE must discover the <em>relationship between the input dimensions to infer the missing parts</em>;</li>
+<li>In images, the model is likely to rely on evidence gathered from a <em>combination of many input dimensions</em> to recover the noise-free version:
+<ul>
+<li>This creates a good foundation for learning a robust latent representation;</li>
+</ul>
+</li>
+<li>In the <a href="https://dl.acm.org/doi/abs/10.1145/1390156.1390294">original DAE paper</a>, a fixed proportion of input dimensions is randomly selected, and their values are forced to 0 (similar to dropout?).</li>
+</ul>
+</section><section>
+<h3 id="regularized-autoencoders-7">Regularized Autoencoders</h3>
+<h4 id="denoising-autoencoders---implementation">Denoising Autoencoders - Implementation</h4>
+<p>Example for the MNIST dataset:</p>
+<pre><code class="language-python">noise_factor = 0.5
+x_train_noisy = x_train + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape) 
+x_test_noisy = x_test + noise_factor * np.random.normal(loc=0.0, scale=1.0, size=x_test.shape) 
+</code></pre>
+<p><img src="autoencoder8.png" alt="Digits from MNIST after adding noise"></p>
+<p><a href="https://colab.research.google.com/drive/1KzErreZmln2zvDnEzXPIOqwpo2-8pgZ7?usp=sharing"><em>Jupyter Notebook</em></a> with the example implementation of Denoising Autoencoder for the MNIST.</p>
+</section><section>
+<h1 id="variational-autoencoders">Variational Autoencoders</h1>
+</section><section>
+<h3 id="introduction">Introduction</h3>
+<h3 id="recap-the-problem-with-the-standard-autoencoder">Recap: The problem with the standard autoencoder</h3>
+<font size="5">
+<ul>
+<li>Besides some efficient applications like denoising autoencoders, they are quite limited.</li>
+<li>The latent space to which they convert their inputs, and where their encoding vectors reside, may not be continuous or allow for easy interpolation.</li>
+<li>For example, training an autoencoder on the MNIST dataset and visualizing the encodings in a 2D latent space reveals the formation of distinct clusters:
+</font></li>
+</ul>
+<img src="vae1.png" width="300px">
+</section><section>
+<h3 id="variational-autoencoders-1">Variational Autoencoders</h3>
+<h4 id="recap-the-problem-with-the-standard-autoencoder-1">Recap: The problem with the standard autoencoder</h4>
+<ul>
+<li>When building a generative model, we don&rsquo;t want to replicate the input data:
+<ul>
+<li>Randomly sample from the latent space, or</li>
+<li>Generate variations in an input image from a continuous latent space;</li>
+<li>If the space has discontinuities and you sample/generate a variation from there, the decoder will simply produce an unrealistic output;</li>
+<li>The decoder has no idea how to handle that region of the latent space;</li>
+<li>During training, it never saw encoded vectors coming from that region of the latent space;</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="variational-autoencoders-2">Variational Autoencoders</h3>
+<h4 id="definitions">Definitions</h4>
+<ul>
+<li>Variational Autoencoders (VAEs) have a fundamentally unique property that separates them from common autoencoders:
+<ul>
+<li>Their latent spaces are inherently continuous;</li>
+<li>The continuity of the latent space allows for easy random sampling and interpolation.</li>
+</ul>
+</li>
+<li>Their encoder does not produce a coding vector of size $n$;</li>
+<li>Instead, it generates two vectors of size $n$:
+<ul>
+<li>A vector of means, $\mu$, and</li>
+<li>Another vector of standard deviations, $\sigma$.</li>
+<li>The mean and the standard deviation of the $i$-th random variable, $X_i$, from which we sample to obtain the sampled encoding passed to the decoder;</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="variational-autoencoders-3">Variational Autoencoders</h3>
+<h4 id="definitions-1">Definitions</h4>
+<p><img src="vae2.png" alt="Variational Autoencoder with $\mu$ and $\sigma$ vectors">
+<em>Source: <a href="https://towardsdatascience.com/intuitively-understanding-variational-autoencoders-1bfe67eb5daf" target=_blank>Variational Autoencoder architecture by Irhum Shafkat</a></em></p>
+</section><section>
+<h3 id="variational-autoencoders-4">Variational Autoencoders</h3>
+<h4 id="example-1">Example</h4>
+<p>In a scenario where we have an input signal with 500 features and we intend to reduce this signal to just 30, we could build a VAE as follows:</p>
+<img src ="vae3.png" width="300px">
+</section><section>
+<h3 id="variational-autoencoders-5">Variational Autoencoders</h3>
+<h4 id="definitions-2">Definitions</h4>
+<img src="vae4.png" width="500px">
+</section><section>
+<h3 id="variational-autoencoders-6">Variational Autoencoders</h3>
+<h4 id="definitions-3">Definitions</h4>
+<font size="5">
+<ul>
+<li>Stochastic generation of encoding vectors.
+<ul>
+<li>For the same input, keeping the mean and standard deviation the same, the actual encoding will vary on each pass due to sampling.</li>
+</ul>
+</li>
+<li>The mean vector controls where the encoding of an input should be centered;</li>
+<li>The standard deviation controls how much the encoding can vary from the mean (the area).</li>
+</ul>
+</font>
+<img src="vae5.png" width="250px">
+</section><section>
+<h3 id="variational-autoencoders-7">Variational Autoencoders</h3>
+<h4 id="definitions-4">Definitions</h4>
+<ul>
+<li>Not just a single point in the latent space refers to a sample of that class.</li>
+<li>All nearby points refer to the same within a $\sigma$ radius;</li>
+<li>The goal here is to create a more homogeneous latent space, eliminating discontinuity;
+<ul>
+<li>The model is now exposed to a certain degree of local variation by varying the encoding of a sample;</li>
+<li>We want overlap between samples that are also not very similar;
+<ul>
+<li>Interpolation between classes;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section><section>
+<h3 id="variational-autoencoders-8">Variational Autoencoders</h3>
+<h4 id="definitions-5">Definitions</h4>
+<ul>
+<li>There are no limits to the values that the $\mu$ and $\sigma$ vectors can assume:
+<ul>
+<li>The encoder can learn to generate very different $\mu$ values for different classes, clustering them and minimizing $\sigma$;</li>
+<li>It can reach a point that appears as a single point.</li>
+</ul>
+</li>
+<li>Desirable: Encodings that are as close as possible while still distinct, allowing for smooth interpolation and the possibility of constructing new samples.</li>
+</ul>
+</section><section>
+<h3 id="variational-autoencoders-9">Variational Autoencoders</h3>
+<h4 id="definitions-6">Definitions</h4>
+<p>What we want and what we can achieve:</p>
+<p><img src="vae6.png" alt="Desired latent space"></p>
+</section><section>
+<h3 id="variational-autoencoders-10">Variational Autoencoders</h3>
+<h4 id="definitions---the-kl-divergence">Definitions - The KL Divergence</h4>
+<font size="5">
+<ul>
+<li><a href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler divergence</a></li>
+<li>Measures how much they diverge from each other;</li>
+<li>For VAEs, the cost by KL is equivalent to the sum of all KL divergences between the component $X_i\sim\mathcal{N}(\mu_i, \sigma_i^2)$ and the standard normal distribution.
+<ul>
+<li>This measure is minimized when $\mu_i=0$ and $\sigma_i=0$;</li>
+</ul>
+</li>
+<li>When the divergence is calculated between univariate distributions, it can be simplified to [1]:
+$$
+\sum_{i=1}^n \sigma_i^2+\mu_i^2 - \log(\sigma_i^2)-1
+$$</li>
+</ul>
+<p><em>Source: <a href="https://stats.stackexchange.com/questions/318748/deriving-the-kl-divergence-loss-for-vaes/370048#370048">Deriving the KL divergence loss for VAEs</a></em></p>
+</font>
+</section><section>
+<h3 id="variational-autoencoders-11">Variational Autoencoders</h3>
+<h4 id="definitions---the-kl-divergence-1">Definitions - The KL Divergence</h4>
+<font size="5">
+<ul>
+<li>Forces the encoder to distribute all encodings uniformly around the center of the latent space;</li>
+<li>Using purely the result of the KL loss results in a latent space with densely placed encodings randomly, near the center of the latent space;</li>
+<li>The decoder finds it impossible to decode anything meaningful from this space;</li>
+</ul>
+</font>
+<img src="vae7.png" width="250px">
+</section><section>
+<h3 id="variational-autoencoders-12">Variational Autoencoders</h3>
+<h4 id="grouping-the-information">Grouping the information&hellip;</h4>
+<font size="5">
+<ul>
+<li>Use the KL divergence as a penalization mechanism;</li>
+<li>Optimize the composite loss (e.g., reconstruction, or cross-entropy) and the KL divergence;
+<ul>
+<li>Generate a latent space that maintains the similarity of nearby encodings;</li>
+<li>Globally, it is densely packed near the origin of the latent space;</li>
+<li>Balance is achieved by the clustering nature of the reconstruction loss and the dense packing nature of the KL loss;</li>
+</ul>
+</li>
+</ul>
+</font>
+<img src="vae8.png" width="250px">
 </section>
 
 </div>
@@ -1552,6 +2212,10 @@ model.add(Dropout(0.5))
   
   
   <script type="text/javascript" src="./reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
 
 
 
