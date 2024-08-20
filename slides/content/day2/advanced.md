@@ -196,80 +196,6 @@ How about addind the <em>Intercept</em>?
 </iframe>
 
 ---
-## Residuals
-
-<img src="residuos_ilustracao.png" width="600px">
-
----
-
-- One way to calculate $w_0$ and $w_1$ is based on the sum of squared residuals (RSS - <em>R</em>esidual <em>S</em>um of <em>S</em>quares):
-
-$J(W) = \frac{1}{2n}\sum_{i=1}^{n} \epsilon_i^2$
-
----
-
-## Variation of the Cost Function
-
-### Examining $\epsilon$ as a function of $w_0$ and $w_1$
-
-![Cost Function](funcao_custo.png)
-
----
-
-## Finding values of $w_0$ and $w_1$
-
-### Gradient Calculation
-
-- The gradient of a vector is a generalization of the derivative and is represented by the vector operator $\nabla$. This operation is used to minimize our cost function (<em>RSS</em>):
-- Method of <em>Ordinary Least Squares</em> (OLS)
-
----
-
-## Finding values of $w_0 and $w_1$
-
-### The problem with the analytical solution
-
-- The analytical solution in its vector form is:
-
-$W = (X^T X)^{-1} X^T Y$ 
-
-- Disadvantages of using the analytical solution:
-  - $X^T X$ is not always invertible;
-  - The complexity of computing the inverse is of the order $O(n^3)$:
-    - If the number of features is high, it can become <em>computationally expensive</em>;
-    - Extremely high memory consumption.
-
----
-
-## Finding values of $w_0$ and $w_1$
-
-### Inverse Calculation
-
-<font size="6">
-<em>Problem</em>
-</font>
-
-Imagine a dataset containing $10^5$ features and $10^6$ observations; in this case, $X^T X$ would have $10^5 \times 10^5$ floating points which, at 8 bytes per number, would require <em>80 gigabytes</em>. The inverse calculation would then consume on the order of $O(n^3)$.
-
-{{% fragment %}}<em>80 kilo-yottabytes!!!</em>{{% /fragment %}}
-
----
-### 
-<font size="5">
-<p align="justify">
-Usually, in classification problems, we have the impression that the more features we have, the better our technique's accuracy will be. However, in real-world problems where we have a <em>limited number of samples</em>, a phenomenon known as the <em>curse of dimensionality</em> is observed. There are several negative effects caused by the indiscriminate increase in features:
-</p>
-</font>
-
-{{% fragment %}}
-* **Hughes Phenomenon:** For a finite number of samples, there exists a dimensionality $d^\ast$ beyond which the classification accuracy decreases.
-{{% /fragment %}}
-
-{{% fragment %}}
-<img src="PCA_Fig2.png" width="300px">
-{{% /fragment %}}
-
----
 ## Artificial Neural Networks
 ### How to discover the correct weights?
 * Gradient Descent:
@@ -291,20 +217,6 @@ Usually, in classification problems, we have the impression that the more featur
 * With a single weight: 
 
 <center><img src="gd1.jpeg" width="500px"/></center>
-
----
-
-## Finding values of $w_0$ and $w_1$
-
-### Gradient Descent Technique
-
-* Iterative calculation of the matrix $W$ with:
-
-$w_0^{(t+1)} = w_0^{(t)} - \alpha \frac{\partial RSS}{\partial w_0}$
-
-$w_1^{(t+1)} = w_1^{(t)} - \alpha \frac{\partial RSS}{\partial w_1}$
-
-* Where $\alpha$ is the Learning Rate, i.e., the step size towards the minimum cost value.
 
 
 ---
@@ -551,48 +463,6 @@ and no), won't help us to achieve this objective.
 {{% /note %}}
 
 ---
-## Some examples of activation functions:
-
-**Logistic function (sigmoid):**
- 
-  $g(a) = \frac{1}{1+e^{-a}}, \text{ such that } g(a)\in[0,1]$
-
-<br /><br />
-
-**Hyperbolic tangent function:**
- 
-  $g(a) = 2\sigma(2a)-1, \text{ such that } g(a)\in[-1,1]$
-where $\sigma(x)$ corresponds to the **logistic function**.
-
----
-## Activation Functions
-
-It is desirable that an activation function is **differentiable**. 
-
-How to choose it? {{% fragment %}}It depends on your application.{{% /fragment %}}
-
-<img src="Neural_Networks_Fig3.png" width=250px/>
-<br/>
-<font size="5">  
-
-* Assume $g(a) = \frac{1}{1+e^{-a}}$. 
-* We have that $g^\prime(a) = g(a)(1-g(a))$. 
-* Notice that $g^\prime(a)$ **saturates** when $a > 5$ or $a < -5$. 
-* Furthermore, $g^\prime(a) < 1$ for all $a$. This means that for networks with many layers, the gradient tends to **vanish** during training.
-
-</font>
-
----
-
-## Activation Functions
-
-<img src="Neural_Networks_Fig4.png" width=250px/>
-
-* Assume $g(a) = 2\sigma(2a)-1$. 
-* We have that $g^\prime(a) = 1-g^2(a)$. 
-* Although saturation occurs, $g^\prime(a)$ reaches higher values, even reaching a maximum of 1 when $a = 0$.
-
----
 ## Artificial Neural Networks
 ### The Bias
 <center><img src="bias1.png" width="600px"/></center>
@@ -801,16 +671,6 @@ layer_dense(units = 2, activation = 'softmax')
 {{% note %}}
 * Softmax - function that takes as input a vector of K real numbers, and normalizes it into a probability distribution
 {{% /note %}}
-
----
-## The Softmax Activation
-
-* The softmax function $\sigma:\mathbb{R}^K\rightarrow [0,1]^K$ is a generalization of the logistic function, where $K$ corresponds to the number of classes
-
-<img width="250" src="CNN_Fig14.png" />
-
-* **Why softmax and not the logistic function?** 
-  * Usually, the logistic function is applied to each output neuron without considering all the others. In this case, softmax results in a probability of the neuron of each class responding to an input stimulus
 
 ---
 ## Artificial Neural Networks
@@ -1033,73 +893,42 @@ model.add(Dropout(0.5))
   * Try to <em>normalize the data</em>!
 
 * What is the best accuracy?
-{{% fragment %}}
 * <a href="https://colab.research.google.com/drive/1LnkhSA7XbEWMNdaebOXxsOENr6m-0vpZ?usp=sharing" target="_blank">My solution</a>.
-{{% /fragment %}}
-
 ---
 # Convolutional Neural Networks
 
 ---
-## Introduction
+### Introduction
 
-* **Deep learning** 
-  * Branch of machine learning that uses neural networks with <em>multiple layers</em>
-  * Employ layers to progressively learn <em>different levels of features</em> from input data
-  * Abstraction increase as more layers are used for <em>feature extraction</em> and learning
+* **Deep learning** techniques belong to a branch of machine learning that uses neural networks with multiple layers. The basic idea is to employ layers to progressively learn different levels of features from input data. The levels of abstraction increase as more layers are used for feature extraction and learning.
 
-{{% fragment %}}
-* Among deep learning techniques, special attention has been given to <em>Convolutional Neural Networks</em> (CNNs). 
-* These models have a <em>high capacity for data representation</em>, yielding promising results in numerous fields of knowledge.
-{{% /fragment %}}
+* Among deep learning techniques, special attention has been given to Convolutional Neural Networks (CNNs). These models have a high capacity for data representation, yielding promising results in numerous fields of knowledge.
 
 ---
-## Convolutional Neural Networks
-
-* The basic idea is to use <em>raw data</em> as input 
-* Allow the network to learn the <em>most important features</em> for the problem at hand. 
-* <em>Eliminates the need to manually extract features</em> (handcrafted features).
+* The basic idea is to use "raw data" as input and allow the network to learn the most important features for the problem at hand. This eliminates the need to manually extract features (handcrafted features).
 
 <img width="450" src="CNN_Fig1.png" />
 
 ---
-## Convolutional Neural Networks
+* Generally, CNNs are composed of two main modules: (i) feature learning and (ii) classification. Feature learning is performed through convolution, pooling, and activation operations. The classification step typically consists of fully connected layers and a softmax output layer.
 
-* Generallycomposed of two  modules: 
-{{% fragment %}}
-  1. Feature learning: performed through convolution, pooling, and activation operations. 
-{{% /fragment %}}
-{{% fragment %}}
-  2. Classification: typically  fully connected layers and a softmax output layer.
-{{% /fragment %}}
-
-{{% fragment %}}
-<img width="500" src="CNN_Fig2.png" />
-{{% /fragment %}}
+<img width="700" src="CNN_Fig2.png" />
 
 ---
-## Convolutional Neural Networks
-* What makes CNNs so interesting for various pattern classification tasks? 
-* **feature learning** 
-  * Important information (like texture) is learned at different levels
-* Less susceptible to <em>rotation</em>, <em>translation</em>, and <em>scale issues</em>.
-* To understand how they work, we will first study the feature learning layers
-  * (i) convolution, (ii) pooling, and (iii) activation operations.
+* But what makes CNNs so interesting for various pattern classification tasks? The secret lies in the **feature learning** step, where important information (like texture) is learned at different levels. The interesting part is that these networks are less susceptible to rotation, translation, and scale issues.
+
+* To understand how they work, we will first study the feature learning layers and then move on to the classification layers. As mentioned, each layer of the learning step consists mainly of (i) convolution, (ii) pooling, and (iii) activation operations.
 
 ---
-## Feature Learning
+### Feature Learning
 
-### Convolution
+#### Convolution
 
-* <em>Convolution</em> are widely used in image processing and computer vision tasks, such as image filtering (blurring and noise) and edge detection
-<br /><br />
-<center>
-<img width="650" src="CNN_Fig3.png" />
-</center>
+* The first operation we will see is **convolution**, which is widely used in image processing and computer vision tasks, such as image filtering (blurring and noise) and edge detection, for example. Let's see an example.
+
+<img width="450" src="CNN_Fig3.png" />
 
 ---
-## Convolution
-
 <img width="450" src="CNN_Fig4.png" />
 
 * The central position of the 9x9 input is replaced by its convolution with the 5x5 mask
@@ -1107,29 +936,22 @@ model.add(Dropout(0.5))
 * The procedure is repeated until the entire input matrix has been evaluated. 
 
 ---
-## What are the hyperparameters involved in a convolution operation?
+### What are the hyperparameters involved in a convolution operation?
 
-{{% fragment %}}
-### Parameters vs. hyperparameters
-{{% /fragment %}}
+- **Parameters vs. hyperparameters**.
+  - What type of mask (kernel) will we use?
+  - What is the best dimension?
+  - How many filters will be employed?
+  - What is the value of the stride?
 
-{{% fragment %}}
-* What type of mask (kernel) will we use?
-* What is the best dimension?
-* How many filters will be employed?
-* What is the value of the stride?
-{{% /fragment %}}
 
 ---
-## Number of Parameters
-
-* Values in the masks that can be interpreted as <em>weights</em>: learned by the CNN during its training process. 
+* What we have, in practice, are values in the masks that can be interpreted as **weights** that will be learned by the CNN during its training process. 
 * How do we calculate the number of these parameters?
 
 <img width="450" src="CNN_Fig7.png" />
 
 ---
-## Number of Parameters
 
 | Layer            | Type            | Input   | Output                               |
 |------------------|-----------------|---------|--------------------------------------|
@@ -1144,95 +966,79 @@ model.add(Dropout(0.5))
 ---
 ### What is the role of the hyperparameter values in a CNN?
 
-* <em>Kernel size:</em>
-  * **Small kernels** extract more local information (local features) with size reductions between layers smaller (deeper architectures)
-  * **Larger kernels**  faster size reductions of feature maps and extract more global information
-* <em>Stride value</em>: similar impact to kernel size
-  * **Larger values**: faster reductions of feature maps
-  * **Smaller stride**: more features being learned
-  
-{{% fragment %}}Since smaller stride values and kernel sizes enable more features to be learned, why not always adopt them?{{% /fragment %}} {{% fragment %}}**This requires larger datasets.**{{% /fragment %}}
+- **Kernel size:** plays a very important role. **Small kernels** extract more local information (local features) as size reductions between layers are smaller, allowing for deeper architectures. On the other hand, **larger kernels** result in faster size reductions of feature maps and extract more global information.
+- Stride value: has a similar impact to kernel size, with larger values resulting in faster reductions of feature maps. Smaller stride values result in more features being learned.
+- Since smaller stride values and kernel sizes enable more features to be learned, why not always adopt them? **This requires larger datasets.**
 
 ---
-## Convolutions 
 #### In summary, we have to make decisions about the following items regarding a convolution layer:
-<ol>
-{{% fragment %}}<li><em>Type of padding</em></li>{{% /fragment %}}
 
-{{% fragment %}}<li><em>Kernel size</em></li>{{% /fragment %}}
-
-{{% fragment %}}<li><em>Stride value</em></li>{{% /fragment %}}
-
-{{% fragment %}}<li><em>Number of filters</em></li>{{% /fragment %}}
-</ol>
+1. Type of padding.
+2. Kernel size.
+3. Stride value.
+4. Number of filters.
 
 ---
-## Activation
+#### Activation
 
-* CNNs are usually composed of numerous layers: undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems). 
-* **Non-linearity**, allowing the network to learn non-linear decision functions.
+* CNNs are usually composed of numerous layers, making it undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems). Another interesting feature of activation functions is their **non-linearity**, allowing the network to learn non-linear decision functions.
 
-* One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity: 
+* One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity. Its formulation is given as follows:
 
 $ \text{ReLU(x)} = \max\{0,x\}. $
 
 ---
-## Activation
+* Below is the graph of the ReLU(x) function. Note that the function only returns a value when its input is greater than 0, aiding in the training time.
+* The derivative of $ReLU(x)=0$, case $x\leq0$, and $1$ otherwise
 
 <img width="350" src="CNN_Fig10.png" />
 
-* Note that the function only returns a value when its input is greater than 0, aiding in the training time.
-* The derivative of $ReLU(x)=0$, case $x\leq0$, and $1$ otherwise
+---
+#### Pooling
+
+* There are different types of pooling operations, whose main goal is to **decrease the resolution** (downsampling) of the feature maps and add **invariance properties** to the network. The size reduction of feature maps leads to a decrease in the number of parameters to be learned by the network, allowing for more efficient training.
+
+* Among the main types of pooling, we can mention:
+  - Max-Pooling
+  - Average Pooling
+  - Global Pooling
 
 ---
-## Pooling
-
-* **Decrease the resolution** (downsampling) of the feature maps and 
-* Add **invariance properties** to the network. 
-* Feature maps size reduction leads to a decrease in the number of parameters to be learned by the network
-  * <em>More efficient training</em>
-* <em>Max-Pooling</em>
-* <em>Average Pooling</em>
-* <em>Global Pooling</em>
-
----
-### Some illustrations to exemplify the functioning of the mentioned types of pooling.
-
+#### Some illustrations to exemplify the functioning of the mentioned types of pooling.
 * Max-Pooling (stride = 2)
 <p><img width="450" src="CNN_Fig8.png" /></p>
 
 ---
-### Some illustrations to exemplify the functioning of the mentioned types of pooling.
+#### Some illustrations to exemplify the functioning of the mentioned types of pooling.
 * Average Pooling (stride = 2)
 <p><img width="450" src="CNN_Fig9.png" /></p>
 
 ---
-##  Pooling
+* The global pooling technique is more radical in the context of downsampling, as it reduces the entire feature map to a single value. In this case, we can use either max-pooling or average pooling.
 
-* Global Pooling
-  * More radical in the context of downsampling
-  * Reduces the entire feature map to a single value
-  * In this case, we can use either max-pooling or average pooling
-* Generally, max-pooling layers tend to provide better results
-  * more informative to use the highest value within a window than to "mask" them with their average value
+* Generally, max-pooling layers tend to provide better results, as it is more informative to use the highest value within a window than to "mask" them with their average value.
 
 ---
-## Flattening
+#### Flattening
 
-* Before sending our data to the fully connected layers, we need to "flatten" the **tensor** (data) 
-* Receive input with multiple dimensions (feature maps) and the output is a one-dimensional vector
+* Before sending our data through convolution, pooling, and activation layers to the fully connected layers, we need to "flatten" the **tensor** (data). The operation in this layer is quite simple, as we receive input with multiple dimensions (feature maps) and the output is a one-dimensional vector, as illustrated below.
 
 <img style="margin-right:100px;" width="250" src="CNN_Fig11.png" /> 
 <img width="280" src="CNN_Fig12.png" />
 
 ---
-## Fully Connected + Dropout
+#### Fully Connected + Dropout
 
-* The final part consists of adopting fully connected layers
-  * Similar to an MLP Neural Network, with a softmax output at the end
-  * It is also common to adopt a regularization technique known as **Dropout**, which "removes" neurons randomly to speed up the training process and prevent overfitting
+* The final part consists of adopting fully connected layers, similar to an MLP Neural Network, with a softmax output at the end. It is also common to adopt a regularization technique known as **Dropout**, which "removes" neurons randomly to speed up the training process and prevent overfitting.
 
 <img width="500" src="CNN_Fig13.png" />
+
+---
+* The softmax function $\sigma:\mathbb{R}^K\rightarrow [0,1]^K$ is a generalization of the logistic function, where \(K\) corresponds to the number of classes.
+
+<img width="250" src="CNN_Fig14.png" />
+
+* **Why softmax and not the logistic function?** Usually, the logistic function is applied to each output neuron without considering all the others. In this case, softmax results in a probability of the neuron of each class responding to an input stimulus.
 
 ---
 # Building an MNIST solution using Convolutions
