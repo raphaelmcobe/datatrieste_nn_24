@@ -1033,9 +1033,69 @@ model.add(Dropout(0.5))
   * Try to <em>normalize the data</em>!
 
 * What is the best accuracy?
+
 {{% fragment %}}
 * <a href="https://colab.research.google.com/drive/1LnkhSA7XbEWMNdaebOXxsOENr6m-0vpZ?usp=sharing" target="_blank">My solution</a>.
 {{% /fragment %}}
+
+---
+# Mini Projects
+
+---
+{{<slide background-image="cms.png">}}
+# <span style="color:#fff;"> Particle Physics</span>
+
+---
+## Artificial Neural Networks
+### The Particle Physics Project
+
+<center><a href="atlas_particle_shower.jpg" target="_blank"><img src="atlas_particle_shower.jpg" width="500px"/></a></center>
+
+---
+## Artificial Neural Networks
+### The Particle Physics Project
+
+<center><a href="jet-images.png" target="_blank"><img src="jet-images.png" width="500px"/></a></center>
+
+---
+## Artificial Neural Networks
+### The Particle Physics Project
+* Quantum Chromodynamics
+<center><a href="qcd.png" target="_blank"><img src="qcd.png" width="500px"/></a></center>
+
+---
+## Artificial Neural Networks
+### Signal VS Background
+
+<center><a href="backgroundVSsignal.png" target="_blank"><img src="backgroundVSsignal.png" width="700px"/></a></center>
+
+---
+## Artificial Neural Networks
+### Signal VS Background
+
+Run this <a href="https://colab.research.google.com/drive/1cbiRS7ax1k1mzqk6NioSuQgOiLWJIVx3?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the Jet Classification.
+
+---
+
+{{<slide background-image="COVID19_CT.jpg">}}
+# <span style="color:#ff0000;">COVID19 Chest CT Image Processing</span>
+
+---
+## Artificial Neural Networks
+### COVID19 Diagnosis
+
+<center><a href="COVIDCT1.png" target="_blank"><img src="COVIDCT1.png" width="500px"/></a></center>
+
+---
+## Artificial Neural Networks
+### COVID19 Diagnosis
+
+Run this <a href="https://colab.research.google.com/drive/1rXZP2XofMS3ijiOkrsJSn4dUK1zzz68t?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the CT Image Classification.
+
+{{% note %}}
+Remember to check the impact of normallization
+`x_train = x_train / 255.0   # Pixel normalization`
+{{% /note %}}
 
 ---
 # Convolutional Neural Networks
@@ -1065,7 +1125,7 @@ model.add(Dropout(0.5))
 ---
 ## Convolutional Neural Networks
 
-* Generallycomposed of two  modules: 
+* Generally composed of two  modules: 
 {{% fragment %}}
   1. Feature learning: performed through convolution, pooling, and activation operations. 
 {{% /fragment %}}
@@ -1235,60 +1295,52 @@ $ \text{ReLU(x)} = \max\{0,x\}. $
 <img width="500" src="CNN_Fig13.png" />
 
 ---
+## Keras Implementation
+```python
+model = Sequential([
+    Input(shape=(28,28,1)),
+    Conv2D(filters=2,
+           kernel_size=(2,2),
+           strides=(1, 1),
+           padding="valid", 
+           activation="relu"),
+    MaxPooling2D(pool_size=(2, 2), 
+                 strides=None, 
+                 padding="valid"),
+    Flatten(),
+    Dense(20, activation="relu"),
+    Dropout(rate=0.5),
+    Dense(10, activation="softmax")
+])
+```
+* The `Conv2D` represents a convolution layer
+* The `MaxPooling2D` represents a pooling strategy
+* The `Flatten()` is responsible for linearizing the output of the feature selection
+
+---
 # Building an MNIST solution using Convolutions
 
+Apply your knowledge you acquire to perform the classification in the [Fashion MNIST classification problem](https://www.kaggle.com/datasets/zalando-research/fashionmnist).
+* Things to try:
+  * Increase the number of Filters;
+  * Add _Max Pooling_ layers;
+  * Increase the amount of convolutional layers
+
+{{% fragment %}}
 <a href="https://colab.research.google.com/drive/1bDRhn3SJQMZslbqLweUY5bpr0QHpT3cv?usp=sharing" target="_blank">Convnet Notebook</a>
+{{% /fragment %}}
 
 ---
-# Group Projects
+# COVID-19 Dataset exercise
 
----
-{{<slide background-image="cms.png">}}
-# <span style="color:#fff;"> Particle Physics</span>
+Apply your knowledge you acquire to change the classification solution you worked for the  [COVID-19 Chest CT dataset](https://colab.research.google.com/drive/1rXZP2XofMS3ijiOkrsJSn4dUK1zzz68t?usp=sharing).
+* Things to try:
+  * Increase the number of Filters;
+  * Add _Max Pooling_ layers;
+  * Increase the amount of convolutional layers
 
----
-## Artificial Neural Networks
-### The Particle Physics Project
+Remember to not linearize the data, i.e., remove the line:
+```python
+x_train = x_train.reshape(x_train.shape[0], IMAGE_SIZE * IMAGE_SIZE)
+```
 
-<center><a href="atlas_particle_shower.jpg" target="_blank"><img src="atlas_particle_shower.jpg" width="500px"/></a></center>
-
----
-## Artificial Neural Networks
-### The Particle Physics Project
-
-<center><a href="jet-images.png" target="_blank"><img src="jet-images.png" width="500px"/></a></center>
-
----
-## Artificial Neural Networks
-### The Particle Physics Project
-* Quantum Chromodynamics
-<center><a href="qcd.png" target="_blank"><img src="qcd.png" width="500px"/></a></center>
-
----
-## Artificial Neural Networks
-### Signal VS Background
-
-<center><a href="backgroundVSsignal.png" target="_blank"><img src="backgroundVSsignal.png" width="700px"/></a></center>
-
----
-## Artificial Neural Networks
-### Signal VS Background
-
-Run this <a href="https://colab.research.google.com/drive/1zauFbl7qwyv4wXFp1K5ldfXxD_1QzO6R?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the Jet Classification.
-
----
-
-{{<slide background-image="COVID19_CT.jpg">}}
-# <span style="color:#ff0000;">COVID19 Chest CT Image Processing</span>
-
----
-## Artificial Neural Networks
-### COVID19 Diagnosis
-
-<center><a href="COVIDCT1.png" target="_blank"><img src="COVIDCT1.png" width="500px"/></a></center>
-
----
-## Artificial Neural Networks
-### COVID19 Diagnosis
-
-Run this <a href="https://colab.research.google.com/drive/1S1UQxmDHewXrR_C69mZmoXaP57nGH2X6?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the CT Image Classification.
