@@ -1365,7 +1365,9 @@ model.add(Dropout(0.5))
 </ul>
 </li>
 <li>
-<p>What is the best accuracy?
+<p>What is the best accuracy?</p>
+</li>
+</ul>
 
 
 <span class='fragment ' ><ul>
@@ -1373,9 +1375,58 @@ model.add(Dropout(0.5))
 </ul>
 </span>
 
-</p>
-</li>
+
+</section><section>
+<h1 id="mini-projects">Mini Projects</h1>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-background-image="cms.png">
+  
+<h1 id="span-stylecolorfff-particle-physicsspan"><span style="color:#fff;"> Particle Physics</span></h1>
+</section><section>
+<h2 id="artificial-neural-networks-59">Artificial Neural Networks</h2>
+<h3 id="the-particle-physics-project">The Particle Physics Project</h3>
+<center><a href="atlas_particle_shower.jpg" target="_blank"><img src="atlas_particle_shower.jpg" width="500px"/></a></center>
+</section><section>
+<h2 id="artificial-neural-networks-60">Artificial Neural Networks</h2>
+<h3 id="the-particle-physics-project-1">The Particle Physics Project</h3>
+<center><a href="jet-images.png" target="_blank"><img src="jet-images.png" width="500px"/></a></center>
+</section><section>
+<h2 id="artificial-neural-networks-61">Artificial Neural Networks</h2>
+<h3 id="the-particle-physics-project-2">The Particle Physics Project</h3>
+<ul>
+<li>Quantum Chromodynamics</li>
 </ul>
+<center><a href="qcd.png" target="_blank"><img src="qcd.png" width="500px"/></a></center>
+</section><section>
+<h2 id="artificial-neural-networks-62">Artificial Neural Networks</h2>
+<h3 id="signal-vs-background">Signal VS Background</h3>
+<center><a href="backgroundVSsignal.png" target="_blank"><img src="backgroundVSsignal.png" width="700px"/></a></center>
+</section><section>
+<h2 id="artificial-neural-networks-63">Artificial Neural Networks</h2>
+<h3 id="signal-vs-background-1">Signal VS Background</h3>
+<p>Run this <a href="https://colab.research.google.com/drive/1cbiRS7ax1k1mzqk6NioSuQgOiLWJIVx3?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the Jet Classification.</p>
+</section>
+
+<section data-noprocess data-shortcode-slide
+      data-background-image="COVID19_CT.jpg">
+  
+<h1 id="span-stylecolorff0000covid19-chest-ct-image-processingspan"><span style="color:#ff0000;">COVID19 Chest CT Image Processing</span></h1>
+</section><section>
+<h2 id="artificial-neural-networks-64">Artificial Neural Networks</h2>
+<h3 id="covid19-diagnosis">COVID19 Diagnosis</h3>
+<center><a href="COVIDCT1.png" target="_blank"><img src="COVIDCT1.png" width="500px"/></a></center>
+</section><section>
+<h2 id="artificial-neural-networks-65">Artificial Neural Networks</h2>
+<h3 id="covid19-diagnosis-1">COVID19 Diagnosis</h3>
+<p>Run this <a href="https://colab.research.google.com/drive/1rXZP2XofMS3ijiOkrsJSn4dUK1zzz68t?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the CT Image Classification.</p>
+
+
+
+<aside class="notes"><p>Remember to check the impact of normallization
+<code>x_train = x_train / 255.0   # Pixel normalization</code></p>
+</aside>
 </section><section>
 <h1 id="convolutional-neural-networks">Convolutional Neural Networks</h1>
 </section><section>
@@ -1409,7 +1460,7 @@ model.add(Dropout(0.5))
 </section><section>
 <h2 id="convolutional-neural-networks-2">Convolutional Neural Networks</h2>
 <ul>
-<li>Generallycomposed of two  modules:
+<li>Generally composed of two  modules:
 
 
 <span class='fragment ' ><ol>
@@ -1671,53 +1722,61 @@ model.add(Dropout(0.5))
 </ul>
 <img width="500" src="CNN_Fig13.png" />
 </section><section>
-<h1 id="building-an-mnist-solution-using-convolutions">Building an MNIST solution using Convolutions</h1>
-<p><a href="https://colab.research.google.com/drive/1bDRhn3SJQMZslbqLweUY5bpr0QHpT3cv?usp=sharing" target="_blank">Convnet Notebook</a></p>
-</section><section>
-<h1 id="group-projects">Group Projects</h1>
-</section>
-
-<section data-noprocess data-shortcode-slide
-      data-background-image="cms.png">
-  
-<h1 id="span-stylecolorfff-particle-physicsspan"><span style="color:#fff;"> Particle Physics</span></h1>
-</section><section>
-<h2 id="artificial-neural-networks-59">Artificial Neural Networks</h2>
-<h3 id="the-particle-physics-project">The Particle Physics Project</h3>
-<center><a href="atlas_particle_shower.jpg" target="_blank"><img src="atlas_particle_shower.jpg" width="500px"/></a></center>
-</section><section>
-<h2 id="artificial-neural-networks-60">Artificial Neural Networks</h2>
-<h3 id="the-particle-physics-project-1">The Particle Physics Project</h3>
-<center><a href="jet-images.png" target="_blank"><img src="jet-images.png" width="500px"/></a></center>
-</section><section>
-<h2 id="artificial-neural-networks-61">Artificial Neural Networks</h2>
-<h3 id="the-particle-physics-project-2">The Particle Physics Project</h3>
+<h2 id="keras-implementation">Keras Implementation</h2>
+<pre><code class="language-python">model = Sequential([
+    Input(shape=(28,28,1)),
+    Conv2D(filters=2,
+           kernel_size=(2,2),
+           strides=(1, 1),
+           padding=&quot;valid&quot;, 
+           activation=&quot;relu&quot;),
+    MaxPooling2D(pool_size=(2, 2), 
+                 strides=None, 
+                 padding=&quot;valid&quot;),
+    Flatten(),
+    Dense(20, activation=&quot;relu&quot;),
+    Dropout(rate=0.5),
+    Dense(10, activation=&quot;softmax&quot;)
+])
+</code></pre>
 <ul>
-<li>Quantum Chromodynamics</li>
+<li>The <code>Conv2D</code> represents a convolution layer</li>
+<li>The <code>MaxPooling2D</code> represents a pooling strategy</li>
+<li>The <code>Flatten()</code> is responsible for linearizing the output of the feature selection</li>
 </ul>
-<center><a href="qcd.png" target="_blank"><img src="qcd.png" width="500px"/></a></center>
 </section><section>
-<h2 id="artificial-neural-networks-62">Artificial Neural Networks</h2>
-<h3 id="signal-vs-background">Signal VS Background</h3>
-<center><a href="backgroundVSsignal.png" target="_blank"><img src="backgroundVSsignal.png" width="700px"/></a></center>
-</section><section>
-<h2 id="artificial-neural-networks-63">Artificial Neural Networks</h2>
-<h3 id="signal-vs-background-1">Signal VS Background</h3>
-<p>Run this <a href="https://colab.research.google.com/drive/1zauFbl7qwyv4wXFp1K5ldfXxD_1QzO6R?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the Jet Classification.</p>
-</section>
+<h1 id="building-an-mnist-solution-using-convolutions">Building an MNIST solution using Convolutions</h1>
+<p>Apply your knowledge you acquire to perform the classification in the <a href="https://www.kaggle.com/datasets/zalando-research/fashionmnist">Fashion MNIST classification problem</a>.</p>
+<ul>
+<li>Things to try:
+<ul>
+<li>Increase the number of Filters;</li>
+<li>Add <em>Max Pooling</em> layers;</li>
+<li>Increase the amount of convolutional layers</li>
+</ul>
+</li>
+</ul>
 
-<section data-noprocess data-shortcode-slide
-      data-background-image="COVID19_CT.jpg">
-  
-<h1 id="span-stylecolorff0000covid19-chest-ct-image-processingspan"><span style="color:#ff0000;">COVID19 Chest CT Image Processing</span></h1>
+
+<span class='fragment ' ><p><a href="https://colab.research.google.com/drive/1bDRhn3SJQMZslbqLweUY5bpr0QHpT3cv?usp=sharing" target="_blank">Convnet Notebook</a></p>
+</span>
+
+
 </section><section>
-<h2 id="artificial-neural-networks-64">Artificial Neural Networks</h2>
-<h3 id="covid19-diagnosis">COVID19 Diagnosis</h3>
-<center><a href="COVIDCT1.png" target="_blank"><img src="COVIDCT1.png" width="500px"/></a></center>
-</section><section>
-<h2 id="artificial-neural-networks-65">Artificial Neural Networks</h2>
-<h3 id="covid19-diagnosis-1">COVID19 Diagnosis</h3>
-<p>Run this <a href="https://colab.research.google.com/drive/1S1UQxmDHewXrR_C69mZmoXaP57nGH2X6?usp=sharing" target="_blank">Jupyter Notebook</a> for performing the CT Image Classification.</p>
+<h1 id="covid-19-dataset-exercise">COVID-19 Dataset exercise</h1>
+<p>Apply your knowledge you acquire to change the classification solution you worked for the  <a href="https://colab.research.google.com/drive/1rXZP2XofMS3ijiOkrsJSn4dUK1zzz68t?usp=sharing">COVID-19 Chest CT dataset</a>.</p>
+<ul>
+<li>Things to try:
+<ul>
+<li>Increase the number of Filters;</li>
+<li>Add <em>Max Pooling</em> layers;</li>
+<li>Increase the amount of convolutional layers</li>
+</ul>
+</li>
+</ul>
+<p>Remember to not linearize the data, i.e., remove the line:</p>
+<pre><code class="language-python">x_train = x_train.reshape(x_train.shape[0], IMAGE_SIZE * IMAGE_SIZE)
+</code></pre>
 </section>
     <section><h1 id="autoencoders">Autoencoders</h1>
 </section><section>
