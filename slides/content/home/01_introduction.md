@@ -1184,20 +1184,8 @@ Remember to check the impact of normallization
 ## Number of Parameters
 
 * Values in the masks that can be interpreted as <em>weights</em>: learned by the CNN during its training process. 
-* How do we calculate the number of these parameters?
 
 <img width="450" src="CNN_Fig7.png" />
-
----
-## Number of Parameters
-
-| Layer            | Type            | Input   | Output                               |
-|------------------|-----------------|---------|--------------------------------------|
-| Input            | Data            | 0       | 3                                    |
-| Intermediate 1   | Convolutional   | 3       | (27+27)+2 biases = 56                |
-| Intermediate 2   | Convolutional   | 2       | 54+3 biases = 57                     |
-| Intermediate 3   | Flattened       | -       | 20x20x3 = 1,200                      |
-| Output           | Dense           | 1,200   | 1,200x2+2 biases = 2402              |
 
 **Number of parameters to be learned: 2,515.**
 
@@ -1225,24 +1213,6 @@ Remember to check the impact of normallization
 
 {{% fragment %}}<li><em>Number of filters</em></li>{{% /fragment %}}
 </ol>
-
----
-## Activation
-
-* CNNs are usually composed of numerous layers: undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems). 
-* **Non-linearity**, allowing the network to learn non-linear decision functions.
-
-* One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity: 
-
-$ \text{ReLU(x)} = \max\{0,x\}. $
-
----
-## Activation
-
-<img width="350" src="CNN_Fig10.png" />
-
-* Note that the function only returns a value when its input is greater than 0, aiding in the training time.
-* The derivative of $ReLU(x)=0$, case $x\leq0$, and $1$ otherwise
 
 ---
 ## Pooling

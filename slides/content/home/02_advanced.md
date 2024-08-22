@@ -111,21 +111,7 @@ Given only the activation vector of hidden units $a^{(2)} \in \mathcal{R}^{50}$,
     * The model is trained to predict the original, non-corrupted data as its output.
 
 ---
-
-### Undercomplete Autoencoders
-
-* Autoencoder whose coding dimension is smaller than the input dimension;
-* Forces the autoencoder to capture the most relevant attributes of the training data;
-    * Also known as bottlenecks;
-* Minimizes the cost function, where $f$ is the encoder function and $g$ is the decoder function, by adjusting parameters $\theta$ and $\phi$:
-$$
-J(w,w\prime) = \frac{1}{n} \sum_{i=1}^{n} (x^{(i)} - f_w(g_{w\prime}(x^{(i)})))^2
-$$
-* Nonlinear encoder functions $f$, as well as decoders $g$, can learn a more powerful nonlinear generalization than PCA.
-
----
-
-### Undercomplete Autoencoders
+### Autoencoders
 
 #### Implementation
 
@@ -137,7 +123,7 @@ _Source: [Autoencoder architecture by Lilian Weng](https://lilianweng.github.io/
 
 ---
 
-### Undercomplete Autoencoders
+### Autoencoders
 
 #### Implementation:
 
@@ -154,7 +140,7 @@ autoencoder.compile(loss="mse", optimizer="SGD")
 
 ---
 
-### Undercomplete Autoencoders
+### Autoencoders
 
 #### Implementation
 
@@ -162,7 +148,7 @@ autoencoder.compile(loss="mse", optimizer="SGD")
 
 ---
 
-### Undercomplete Autoencoders
+### Autoencoders
 
 #### Implementation
 
@@ -173,7 +159,7 @@ autoencoder.compile(loss="mse", optimizer="SGD")
 
 ---
 
-### Undercomplete Autoencoders
+### Autoencoders
 
 #### What Are They Not Good At?
 
@@ -181,7 +167,7 @@ autoencoder.compile(loss="mse", optimizer="SGD")
 
 ---
 
-### Undercomplete Autoencoders
+### Autoencoders
 
 #### What Are They Not Good At?
 
@@ -205,55 +191,6 @@ autoencoder.compile(loss="mse", optimizer="SGD")
 
 ### Regularized Autoencoders
 
-* Uses a loss function that "encourages" the model to have other properties, such as sparsity of the representation and robustness to noise or missing inputs;
-* Can be nonlinear and overcomplete, but still learn something useful about the data distribution;
-* The two most common Regularized Autoencoders are:
-    * **Sparse Autoencoders**: sparsity penalty added to their original cost function; -> Eq. 1
-    * **Denoising Autoencoders**: add noise (Gaussian, for example) to the inputs, forcing the model to learn important features;
-
----
-
-### Regularized Autoencoders
-
-#### Sparse Autoencoders
-
-* Essentially an autoencoder whose training criterion involves sparsity as a penalty term;
-* Has a latent dimension larger than the input or output dimensions;
-* Typically used to **learn features for another task**, such as classification;
-* Think of the penalty simply as a **regularization term**;
-* We want to restrict neurons to be **inactive most of the time**;
-* Reduces the propensity for overfitting the network;
-* It can **no longer copy the input through certain neurons**:
-    * in each run, **these neurons may not be the active ones**.
-
----
-
-### Regularized Autoencoders
-
-#### Sparse Autoencoders
-
-![Sparse Autoencoder](autoencoder6.png)
-_Source: Image by Shreya Chaudhary_
-
----
-
-### Regularized Autoencoders
-
-#### Sparse Autoencoders - Implementation
-
-In Keras, this can be done by adding a regularizer with an `activity_regularizer` to the `Dense` layer:
-
-```python
-encoded = layers.Dense(encoding_dim, activation='relu',
-                activity_regularizer=regularizers.l1(10e-5))(input_img)
-```
-
-With the regularization added, the model is less likely to overfit and **can be trained longer**.
-
----
-
-### Regularized Autoencoders
-
 #### Denoising Autoencoders
 
 * The input is <em>partially corrupted</em> by adding noise or "masking" some values of the input vector stochastically;
@@ -267,7 +204,7 @@ where $\mathcal{M_D}$ defines the mapping of true data samples to noisy or corru
 
 ### Regularized Autoencoders
 
-**Denoising Autoencoders**
+#### Denoising Autoencoders
 
 ![Denoising Autoencoder](autoencoder7.png)
 
