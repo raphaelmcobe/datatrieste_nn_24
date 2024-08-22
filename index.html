@@ -1541,53 +1541,8 @@ model.add(Dropout(0.5))
 <h2 id="number-of-parameters">Number of Parameters</h2>
 <ul>
 <li>Values in the masks that can be interpreted as <em>weights</em>: learned by the CNN during its training process.</li>
-<li>How do we calculate the number of these parameters?</li>
 </ul>
 <img width="450" src="CNN_Fig7.png" />
-</section><section>
-<h2 id="number-of-parameters-1">Number of Parameters</h2>
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Type</th>
-<th>Input</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Input</td>
-<td>Data</td>
-<td>0</td>
-<td>3</td>
-</tr>
-<tr>
-<td>Intermediate 1</td>
-<td>Convolutional</td>
-<td>3</td>
-<td>(27+27)+2 biases = 56</td>
-</tr>
-<tr>
-<td>Intermediate 2</td>
-<td>Convolutional</td>
-<td>2</td>
-<td>54+3 biases = 57</td>
-</tr>
-<tr>
-<td>Intermediate 3</td>
-<td>Flattened</td>
-<td>-</td>
-<td>20x20x3 = 1,200</td>
-</tr>
-<tr>
-<td>Output</td>
-<td>Dense</td>
-<td>1,200</td>
-<td>1,200x2+2 biases = 2402</td>
-</tr>
-</tbody>
-</table>
 <p><strong>Number of parameters to be learned: 2,515.</strong></p>
 </section><section>
 <h3 id="what-is-the-role-of-the-hyperparameter-values-in-a-cnn">What is the role of the hyperparameter values in a CNN?</h3>
@@ -1639,27 +1594,6 @@ model.add(Dropout(0.5))
 
 
 </ol>
-</section><section>
-<h2 id="activation">Activation</h2>
-<ul>
-<li>
-<p>CNNs are usually composed of numerous layers: undesirable to use sigmoid or hyperbolic tangent activation functions (saturation problems).</p>
-</li>
-<li>
-<p><strong>Non-linearity</strong>, allowing the network to learn non-linear decision functions.</p>
-</li>
-<li>
-<p>One of the most used activation functions is ReLU (Rectified Linear Unit) due to its simplicity and high degree of non-linearity:</p>
-</li>
-</ul>
-<p>$ \text{ReLU(x)} = \max{0,x}. $</p>
-</section><section>
-<h2 id="activation-1">Activation</h2>
-<img width="350" src="CNN_Fig10.png" />
-<ul>
-<li>Note that the function only returns a value when its input is greater than 0, aiding in the training time.</li>
-<li>The derivative of $ReLU(x)=0$, case $x\leq0$, and $1$ otherwise</li>
-</ul>
 </section><section>
 <h2 id="pooling">Pooling</h2>
 <ul>
@@ -1903,28 +1837,13 @@ Given only the activation vector of hidden units $a^{(2)} \in \mathcal{R}^{50}$,
 </li>
 </ul>
 </section><section>
-<h3 id="undercomplete-autoencoders">Undercomplete Autoencoders</h3>
-<ul>
-<li>Autoencoder whose coding dimension is smaller than the input dimension;</li>
-<li>Forces the autoencoder to capture the most relevant attributes of the training data;
-<ul>
-<li>Also known as bottlenecks;</li>
-</ul>
-</li>
-<li>Minimizes the cost function, where $f$ is the encoder function and $g$ is the decoder function, by adjusting parameters $\theta$ and $\phi$:
-$$
-J(w,w\prime) = \frac{1}{n} \sum_{i=1}^{n} (x^{(i)} - f_w(g_{w\prime}(x^{(i)})))^2
-$$</li>
-<li>Nonlinear encoder functions $f$, as well as decoders $g$, can learn a more powerful nonlinear generalization than PCA.</li>
-</ul>
-</section><section>
-<h3 id="undercomplete-autoencoders-1">Undercomplete Autoencoders</h3>
+<h3 id="autoencoders-9">Autoencoders</h3>
 <h4 id="implementation">Implementation</h4>
 <p>General Architecture:</p>
 <img src="autoencoder1.png" width="700px">
 <p><em>Source: <a href="https://lilianweng.github.io/posts/2018-08-12-vae/">Autoencoder architecture by Lilian Weng</a></em></p>
 </section><section>
-<h3 id="undercomplete-autoencoders-2">Undercomplete Autoencoders</h3>
+<h3 id="autoencoders-10">Autoencoders</h3>
 <h4 id="implementation-1">Implementation:</h4>
 <p>Dimensionality reduction for 3D data:</p>
 <pre><code class="language-python">encoding_dim = 2
@@ -1935,20 +1854,20 @@ autoencoder = keras.Model(input_layer, decoded)
 autoencoder.compile(loss=&quot;mse&quot;, optimizer=&quot;SGD&quot;)
 </code></pre>
 </section><section>
-<h3 id="undercomplete-autoencoders-3">Undercomplete Autoencoders</h3>
+<h3 id="autoencoders-11">Autoencoders</h3>
 <h4 id="implementation-2">Implementation</h4>
 <p><img src="autoencoder2.png" alt="Autoencoder architecture"></p>
 </section><section>
-<h3 id="undercomplete-autoencoders-4">Undercomplete Autoencoders</h3>
+<h3 id="autoencoders-12">Autoencoders</h3>
 <h4 id="implementation-3">Implementation</h4>
 <img src="autoencoder3.png" width="300px">
 <img src="autoencoder4.png" width="300px">
 </section><section>
-<h3 id="undercomplete-autoencoders-5">Undercomplete Autoencoders</h3>
+<h3 id="autoencoders-13">Autoencoders</h3>
 <h4 id="what-are-they-not-good-at">What Are They Not Good At?</h4>
 <img src="autoencoder5.png" width="500px">
 </section><section>
-<h3 id="undercomplete-autoencoders-6">Undercomplete Autoencoders</h3>
+<h3 id="autoencoders-14">Autoencoders</h3>
 <h4 id="what-are-they-not-good-at-1">What Are They Not Good At?</h4>
 <ul>
 <li>Some of the biggest challenges regarding the latent space are:
@@ -1960,7 +1879,7 @@ autoencoder.compile(loss=&quot;mse&quot;, optimizer=&quot;SGD&quot;)
 </li>
 </ul>
 </section><section>
-<h3 id="autoencoders-9">Autoencoders</h3>
+<h3 id="autoencoders-15">Autoencoders</h3>
 <h4 id="limitations">Limitations</h4>
 <ul>
 <li>Unfortunately, autoencoders <strong>do not learn anything useful</strong> if the encoder and decoder <strong>have too much capacity</strong>.</li>
@@ -1973,47 +1892,6 @@ autoencoder.compile(loss=&quot;mse&quot;, optimizer=&quot;SGD&quot;)
 </ul>
 </section><section>
 <h3 id="regularized-autoencoders">Regularized Autoencoders</h3>
-<ul>
-<li>Uses a loss function that &ldquo;encourages&rdquo; the model to have other properties, such as sparsity of the representation and robustness to noise or missing inputs;</li>
-<li>Can be nonlinear and overcomplete, but still learn something useful about the data distribution;</li>
-<li>The two most common Regularized Autoencoders are:
-<ul>
-<li><strong>Sparse Autoencoders</strong>: sparsity penalty added to their original cost function; -&gt; Eq. 1</li>
-<li><strong>Denoising Autoencoders</strong>: add noise (Gaussian, for example) to the inputs, forcing the model to learn important features;</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h3 id="regularized-autoencoders-1">Regularized Autoencoders</h3>
-<h4 id="sparse-autoencoders">Sparse Autoencoders</h4>
-<ul>
-<li>Essentially an autoencoder whose training criterion involves sparsity as a penalty term;</li>
-<li>Has a latent dimension larger than the input or output dimensions;</li>
-<li>Typically used to <strong>learn features for another task</strong>, such as classification;</li>
-<li>Think of the penalty simply as a <strong>regularization term</strong>;</li>
-<li>We want to restrict neurons to be <strong>inactive most of the time</strong>;</li>
-<li>Reduces the propensity for overfitting the network;</li>
-<li>It can <strong>no longer copy the input through certain neurons</strong>:
-<ul>
-<li>in each run, <strong>these neurons may not be the active ones</strong>.</li>
-</ul>
-</li>
-</ul>
-</section><section>
-<h3 id="regularized-autoencoders-2">Regularized Autoencoders</h3>
-<h4 id="sparse-autoencoders-1">Sparse Autoencoders</h4>
-<p><img src="autoencoder6.png" alt="Sparse Autoencoder">
-<em>Source: Image by Shreya Chaudhary</em></p>
-</section><section>
-<h3 id="regularized-autoencoders-3">Regularized Autoencoders</h3>
-<h4 id="sparse-autoencoders---implementation">Sparse Autoencoders - Implementation</h4>
-<p>In Keras, this can be done by adding a regularizer with an <code>activity_regularizer</code> to the <code>Dense</code> layer:</p>
-<pre><code class="language-python">encoded = layers.Dense(encoding_dim, activation='relu',
-                activity_regularizer=regularizers.l1(10e-5))(input_img)
-</code></pre>
-<p>With the regularization added, the model is less likely to overfit and <strong>can be trained longer</strong>.</p>
-</section><section>
-<h3 id="regularized-autoencoders-4">Regularized Autoencoders</h3>
 <h4 id="denoising-autoencoders">Denoising Autoencoders</h4>
 <ul>
 <li>The input is <em>partially corrupted</em> by adding noise or &ldquo;masking&rdquo; some values of the input vector stochastically;</li>
@@ -2022,13 +1900,13 @@ autoencoder.compile(loss=&quot;mse&quot;, optimizer=&quot;SGD&quot;)
 <img src="denoising_autoencoder.png" width="400px">
 <p>where $\mathcal{M_D}$ defines the mapping of true data samples to noisy or corrupted ones.</p>
 </section><section>
-<h3 id="regularized-autoencoders-5">Regularized Autoencoders</h3>
-<p><strong>Denoising Autoencoders</strong></p>
+<h3 id="regularized-autoencoders-1">Regularized Autoencoders</h3>
+<h4 id="denoising-autoencoders-1">Denoising Autoencoders</h4>
 <p><img src="autoencoder7.png" alt="Denoising Autoencoder"></p>
 <p><em>Source: Image by Lilian Weng</em></p>
 </section><section>
-<h3 id="regularized-autoencoders-6">Regularized Autoencoders</h3>
-<h4 id="denoising-autoencoders-1">Denoising Autoencoders</h4>
+<h3 id="regularized-autoencoders-2">Regularized Autoencoders</h3>
+<h4 id="denoising-autoencoders-2">Denoising Autoencoders</h4>
 <ul>
 <li>Motivated by the fact that humans can easily recognize an object even with partially occluded vision;</li>
 <li>To &ldquo;repair&rdquo; the input, the DAE must discover the <em>relationship between the input dimensions to infer the missing parts</em>;</li>
@@ -2040,7 +1918,7 @@ autoencoder.compile(loss=&quot;mse&quot;, optimizer=&quot;SGD&quot;)
 <li>In the <a href="https://dl.acm.org/doi/abs/10.1145/1390156.1390294">original DAE paper</a>, a fixed proportion of input dimensions is randomly selected, and their values are forced to 0 (similar to dropout?).</li>
 </ul>
 </section><section>
-<h3 id="regularized-autoencoders-7">Regularized Autoencoders</h3>
+<h3 id="regularized-autoencoders-3">Regularized Autoencoders</h3>
 <h4 id="denoising-autoencoders---implementation">Denoising Autoencoders - Implementation</h4>
 <p>Example for the MNIST dataset:</p>
 <pre><code class="language-python">noise_factor = 0.5
